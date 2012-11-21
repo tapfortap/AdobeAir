@@ -299,5 +299,5 @@ or on Twitter where we go by the swanky handle
 
 Licensed under the terms of the MIT License.
 
-Copyright &copy; 2012 Tap for Tap Promotions Inc.AdobeAir
+Copyright &copy; 2012 Tap for Tap Promotions Inc.
 ========
