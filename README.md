@@ -8,6 +8,7 @@ This Application Native Extension was built using Adobe Air 3.5 SDK.
 ### Minimum Requirements
 #### Android
   - None
+
 #### iPhone
   - An OSX machine running Lion (10.7.x)
   - iOS 6.0 SDK
