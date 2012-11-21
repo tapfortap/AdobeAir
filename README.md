@@ -17,11 +17,10 @@ Note that the iPhone app cannot be built on a Windows machine wusing the Adobe F
 The iOS SDK included with Adobe Flex is too old.
 
 
-## Installation
-If you don't have the native extension yet then head over to the [downloads page](http://tapfortap.com/developers/sdkCHANG ME) and
-get yourself a zip file.
+## Setup
+If you don't have the native extension yet then head over to the [downloads page](https://github.com/tapfortap/AdobeAir/downloads).
 
-Installing the Tap for Tap native extension is super easy. This isn't a Adobe Air 
+Installing the Tap for Tap native extension is super easy. This isn't an Adobe Air 
 or Adobe Flash Builder tutorial so we assume that you have aFlex Mobile project(s) 
 already set up and working. All you need to do is add the `tapfortap.ane` file to
 your project. If you do not know how to do that there is a brief explanation below
@@ -37,9 +36,10 @@ If you do not now how to add a Native Extension to your project in Flash Builder
 4. Click the `Add ANE...` button on the right hand side
 5. Browse to where you downloaded the Tap for Tap native extenion abd select `tapfortap.ane` and open it
 
-#### Building for iOS
+#### Setup Building for iOS
 
-Remember that the iPhone build requires iOS SDK 6 (ie it must be built on a machine running at least OSX Lion 10.7)
+Remember that the iPhone build requires iOS SDK 6 (ie it must be built 
+on a machine running at least OSX Lion 10.7)
 
 1. Right click on your project and select properties.
 2. Expand `Flex Build Packaging` on the left hand menu
@@ -49,7 +49,7 @@ Remember that the iPhone build requires iOS SDK 6 (ie it must be built on a mach
 6. Click on the `Native Extensions` tab
 7. Check the box under the `Package` column
 
-#### Building for Android
+#### Setup Building for Android
 1. Right click on your project and select properties.
 2. Expand `Flex Build Packaging` on the left hand menu
 3. Click on `Google Android` on the left hand menu
@@ -59,12 +59,13 @@ Remember that the iPhone build requires iOS SDK 6 (ie it must be built on a mach
 7. Check the box under the `Package` column
 8. Add the `android.permission.INTERNET` to your `app.xml`
 9. Add the `android.permission.ACCESS_NETWORK_STATE` to your `app.xml`
-10. Include the `com.tapfortap.TapForTapActivity` in the `app.xml`
+10. Include the activity `com.tapfortap.TapForTapActivity` in the `app.xml`
 
-### Command Line or Ant
-1. Add the option `extDir` giving it the path where `tapfortap.ane` is.
+### Setup building with the Command Line or Ant
+1. Add the option `-extDir` givint it the path to the folder to where `tapfortap.ane` is located.
 
-Congratulations, you are done. We said it was easy!
+Congratulations, you are done. You should now be able to call into the Tap for Tap library
+and begin displaying ads.
 
 ## API Documentation
 The ActionScript API lets you create and remove Tap for Tap ad views,
@@ -104,19 +105,19 @@ Create and display an ad view banner at the top or bottom of the display.
 ##### Displaying Banner Ads
 
 ###### iPhone
-On iOS, banner ads are 50 points tall so you will need to leave at least 
-50 points free at the top or bottom of your app depending on where you show
-the add. 
+On iOS, banner ads are 50 points tall so at lest 50 points 
+must be left free at the top or bottom of the view depending on where
+the ad is shown. Only one banner ad can be displayed at a time.
 
 ###### Android
-On Android, the banner ads are 50 * screen.density pixels tall, so
-you will need to leave 50 * screen.density pixels at the top or bottom
-of the display depending on where you show the ad. Only one banner ad
-can exist at a time.
+On Android, banner ads are `(50 * screen.density)` pixels tall so at
+lest `(50 * screen.density)` pixels must be left free at the top or bottom
+of the view depending on where the ad is shown. Only one banner ad can 
+be displayed at a time.
 
 ###### Notes
-On both platforms, when an orientation change occurs you should remove
-the current banner ad and create a new one.
+On both platforms, when an orientation change occurs the banner
+ad should be removed and recreated.
 
 Usage:
 
@@ -146,7 +147,7 @@ Usage:
 var tft: TapForTap = TapForTap.instance;
 
 // Remove the ad view and stop loading ads
-TapForTap.removeAdView();
+tft.removeAdView();
 ```
 
 #### prepareInterstitial(): void
@@ -184,7 +185,7 @@ TapForTap.showInterstitial();
   .
   .
 
-// show another interstital add (Note that we do not need to call
+// show another interstital ad (Note that we do not need to call
 // prepareInterstitial() again)
 tft.showInterstital();
 ```
@@ -225,7 +226,7 @@ tft.showAppWall();
   .
   .
 
-// show another app wall add (Note that we do not need to call
+// show another app wall ad (Note that we do not need to call
 // prepareAppWall() again)
 tft.showwAppWall();
 ```
@@ -274,7 +275,8 @@ tft.setLocation(111.1, 222.2);
 ```
 
 #### setUserAccountId(userAccountId: String): void
-Sets the user account id.
+Sets the user account id. This is a custom id that can be 
+set to anything.
 
 Usage:
 
@@ -289,8 +291,9 @@ tft.setUserAccountId("the user's account Id");
 ## Support
 Things don't always go according to plan. If you hit a snag somewhere and need a
 hand don't hesitate to get in touch with us at
-[support@tapfortap.com](mailto:support@tapfortap.com) or on Twitter where we go
-by the swanky handle [@tapfortap](https://twitter.com/tapfortap).
+[support@tapfortap.com](mailto:support@tapfortap.com) with Adobe Air in the subject line
+or on Twitter where we go by the swanky handle 
+[@tapfortap](https://twitter.com/tapfortap). 
 
 ## License
 
