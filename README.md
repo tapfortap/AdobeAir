@@ -152,8 +152,8 @@ tft.removeAdView();
 ```
 
 #### prepareInterstitial(): void
-This prepares the interstial ad type. This method only needs to be called once
-and must be called before any calls to showInterstitial() will work.
+This prepares the interstial ad type. This method only needs to be called once, 
+after the interstitial is shown we automatically prepare another one for you.
 
 Usage:
 
@@ -192,8 +192,8 @@ tft.showInterstital();
 ```
 
 #### prepareAppWall(): void
-This prepares the app wall ad type. This method only needs to be called once
-and must be called before any calls to showAppWall() will work.
+This prepares the app wall ad type. This method only needs to be called once, 
+after the app wall is shown we automatically prepare another one for you.
 
 Usage:
 
