@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+    <title>Tap for Tap Adobe Air Plugin by tapfortap</title>
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <h1>Tap for Tap Adobe Air Plugin</h1>
+        <h2></h2>
+
+        <section id="downloads">
+          <a href="https://github.com/tapfortap/AdobeAir/zipball/master" class="btn">Download as .zip</a>
+          <a href="https://github.com/tapfortap/AdobeAir/tarball/master" class="btn">Download as .tar.gz</a>
+          <a href="https://github.com/tapfortap/AdobeAir" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <h1>Tap for Tap Adobe Air Native Extension</h1>
+
+<p>Want to use Tap for Tap with Adobe Air? We got you covered on Android and iOS (+ iPhone simulator).</p>
+
+<h2>Preamble</h2>
+
+<p>This Application Native Extension was built using Adobe Air 3.5 SDK.</p>
+
+<h3>Minimum Requirements</h3>
+
+<h4>Android</h4>
+
+<ul>
+<li>None</li>
+</ul><h4>iPhone</h4>
+
+<ul>
+<li>An OSX machine running Lion (10.7.x)</li>
+<li>iOS 6.0 SDK</li>
+</ul><p>Note that the iPhone app cannot be built on a Windows machine wusing the Adobe Flex 4.6 SDK.
+The iOS SDK included with Adobe Flex is too old.</p>
+
+<h2>Setup</h2>
+
+<p>If you don't have the native extension yet then head over to the <a href="https://github.com/tapfortap/AdobeAir/downloads">downloads page</a>.</p>
+
+<p>Installing the Tap for Tap native extension is super easy. This isn't an Adobe Air 
+or Adobe Flash Builder tutorial so we assume that you have aFlex Mobile project(s) 
+already set up and working. All you need to do is add the <code>tapfortap.ane</code> file to
+your project. If you do not know how to do that there is a brief explanation below
+and there are plenty of examples out on the internet.</p>
+
+<h3>Flash Builder 4.6</h3>
+
+<p>If you do not now how to add a Native Extension to your project in Flash Builder</p>
+
+<ol>
+<li>Right click on your project and select properties.</li>
+<li>Click <code>Flex Build Path</code> in the left hand list.</li>
+<li>Click the <code>Native Extensions</code> tab</li>
+<li>Click the <code>Add ANE...</code> button on the right hand side</li>
+<li>Browse to where you downloaded the Tap for Tap native extenion abd select <code>tapfortap.ane</code> and open it</li>
+</ol><h4>Setup Building for iOS</h4>
+
+<p>Remember that the iPhone build requires iOS SDK 6 (ie it must be built 
+on a machine running at least OSX Lion 10.7)</p>
+
+<ol>
+<li>Right click on your project and select properties.</li>
+<li>Expand <code>Flex Build Packaging</code> on the left hand menu</li>
+<li>Click on <code>Apple iOS</code> on the left hand menu</li>
+<li>Check <code>Enable this target platform</code> box</li>
+<li>Click on the <code>Digital Signature</code> tab and provide your <code>Certificate</code> and <code>Provisioning file</code>
+</li>
+<li>Click on the <code>Native Extensions</code> tab</li>
+<li>Check the box under the <code>Package</code> column</li>
+</ol><h4>Setup Building for Android</h4>
+
+<ol>
+<li>Right click on your project and select properties.</li>
+<li>Expand <code>Flex Build Packaging</code> on the left hand menu</li>
+<li>Click on <code>Google Android</code> on the left hand menu</li>
+<li>Check <code>Enable this target platform</code> box</li>
+<li>Click on the <code>Digital Signature</code> tab and provide your <code>Certificate</code>
+</li>
+<li>Click on the <code>Native Extensions</code> tab</li>
+<li>Check the box under the <code>Package</code> column</li>
+<li>Add the <code>android.permission.INTERNET</code> to your <code>app.xml</code>
+</li>
+<li>Add the <code>android.permission.ACCESS_NETWORK_STATE</code> to your <code>app.xml</code>
+</li>
+<li>Include the activity <code>com.tapfortap.TapForTapActivity</code> in the <code>app.xml</code>
+</li>
+</ol><h3>Setup building with the Command Line or Ant</h3>
+
+<ol>
+<li>Add the option <code>-extDir</code> givint it the path to the folder to where <code>tapfortap.ane</code> is located.</li>
+</ol><p>Congratulations, you are done. You should now be able to call into the Tap for Tap library
+and begin displaying ads.</p>
+
+<h2>API Documentation</h2>
+
+<p>The ActionScript API lets you create and remove Tap for Tap ad views,
+interstitals and app walls and set various optional information about your users
+to help us with targetting. Please make sure your privacy policy allows this
+before giving us their personal information.</p>
+
+<h4>Preamble</h4>
+
+<p>The first thing you will need to do before using any of the Tap for Tap API's is
+to get a context to the Tap for Tap native extension. The instance is implemented
+as a singleton.</p>
+
+<div class="highlight"><pre><span class="c1">// Get a reference to the Tap for Tap context</span>
+<span class="kd">var</span> <span class="nx">tft</span><span class="o">:</span> <span class="nx">TapForTap</span> <span class="o">=</span> <span class="nx">TapForTap</span><span class="p">.</span><span class="nx">instance</span><span class="p">;</span>
+</pre></div>
+
+<h4>initializeWithApiKey(apiKey: String): void</h4>
+
+<p>This method needs to be called before you can use any of the other API calls.
+This method initializes your app with the TapForTap so we can begin serving 
+you ads.</p>
+
+<p>Usage:</p>
+
+<div class="highlight"><pre><span class="c1">// Get a reference to the Tap for Tap context</span>
+<span class="kd">var</span> <span class="nx">tft</span><span class="o">:</span> <span class="nx">TapForTap</span> <span class="o">=</span> <span class="nx">TapForTap</span><span class="p">.</span><span class="nx">instance</span><span class="p">;</span>
+
+<span class="c1">// Initialze with TapForTap with my API key</span>
+<span class="kd">var</span> <span class="nx">apiKey</span><span class="o">:</span> <span class="nb">String</span> <span class="o">=</span> <span class="s1">'My API key from my TapForTap account'</span><span class="p">;</span>
+<span class="nx">tft</span><span class="p">.</span><span class="nx">initializeWithApiKey</span><span class="p">(</span><span class="nx">apiKey</span><span class="p">);</span>
+</pre></div>
+
+<h4>createAdView(displayAtTop: Boolean): void</h4>
+
+<p>Create and display an ad view banner at the top or bottom of the display.</p>
+
+<h5>Displaying Banner Ads</h5>
+
+<h6>iPhone</h6>
+
+<p>On iOS, banner ads are 50 points tall so at lest 50 points 
+must be left free at the top or bottom of the view depending on where
+the ad is shown. Only one banner ad can be displayed at a time.</p>
+
+<h6>Android</h6>
+
+<p>On Android, banner ads are <code>(50 * screen.density)</code> pixels tall so at
+lest <code>(50 * screen.density)</code> pixels must be left free at the top or bottom
+of the view depending on where the ad is shown. Only one banner ad can 
+be displayed at a time.</p>
+
+<h6>Notes</h6>
+
+<p>On both platforms, when an orientation change occurs the banner
+ad should be removed and recreated.</p>
+
+<p>Usage:</p>
+
+<div class="highlight"><pre><span class="c1">// Get a reference to the Tap for Tap context</span>
+<span class="kd">var</span> <span class="nx">tft</span><span class="o">:</span> <span class="nx">TapForTap</span> <span class="o">=</span> <span class="nx">TapForTap</span><span class="p">.</span><span class="nx">instance</span><span class="p">;</span>
+
+<span class="c1">// Create an ad view banner at the bottom of the display</span>
+<span class="nx">tft</span><span class="p">.</span><span class="nx">createAdView</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
+
+<span class="c1">// Create an ad view banner at the top of the display</span>
+<span class="nx">tft</span><span class="p">.</span><span class="nx">createAdView</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
+
+<span class="c1">// On orientation change remove the ad and create a new ad with</span>
+<span class="c1">// at the top</span>
+<span class="nx">tft</span><span class="p">.</span><span class="nx">removeAdView</span><span class="p">();</span>
+<span class="nx">tft</span><span class="p">.</span><span class="nx">createAdView</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
+</pre></div>
+
+<h4>removeAdView(): void</h4>
+
+<p>Removes the ad view banner from the bottom screen and stops loading ads.</p>
+
+<p>Usage:</p>
+
+<div class="highlight"><pre><span class="c1">// Get a reference to the Tap for Tap context</span>
+<span class="kd">var</span> <span class="nx">tft</span><span class="o">:</span> <span class="nx">TapForTap</span> <span class="o">=</span> <span class="nx">TapForTap</span><span class="p">.</span><span class="nx">instance</span><span class="p">;</span>
+
+<span class="c1">// Remove the ad view and stop loading ads</span>
+<span class="nx">tft</span><span class="p">.</span><span class="nx">removeAdView</span><span class="p">();</span>
+</pre></div>
+
+<h4>prepareInterstitial(): void</h4>
+
+<p>This prepares the interstial ad type. This method only needs to be called once
+and must be called before any calls to showInterstitial() will work.</p>
+
+<p>Usage:</p>
+
+<div class="highlight"><pre><span class="c1">// Get a reference to the Tap for Tap context</span>
+<span class="kd">var</span> <span class="nx">tft</span><span class="o">:</span> <span class="nx">TapForTap</span> <span class="o">=</span> <span class="nx">TapForTap</span><span class="p">.</span><span class="nx">instance</span><span class="p">;</span>
+
+<span class="c1">// Prepare the insterstial ad type</span>
+<span class="nx">tft</span><span class="p">.</span><span class="nx">prepareInsterstitial</span><span class="p">();</span>
+</pre></div>
+
+<h4>showInterstitial(): void</h4>
+
+<p>This shows an interstitial ad. Remember that you must call prepareInterstital() once
+before calling showInterstitial(). Afterwards you only need to call showInterstial()
+to show a new interstitial ad.</p>
+
+<p>Usage:</p>
+
+<div class="highlight"><pre><span class="c1">// prepare the interstitial ad type</span>
+<span class="c1">// Get a reference to the Tap for Tap context</span>
+<span class="kd">var</span> <span class="nx">tft</span><span class="o">:</span> <span class="nx">TapForTap</span> <span class="o">=</span> <span class="nx">TapForTap</span><span class="p">.</span><span class="nx">instance</span><span class="p">;</span>
+<span class="nx">tft</span><span class="p">.</span><span class="nx">prepareInterstitial</span><span class="p">();</span>
+
+<span class="c1">// show an interstitial ad</span>
+<span class="nx">TapForTap</span><span class="p">.</span><span class="nx">showInterstitial</span><span class="p">();</span>
+
+<span class="c1">// do some neat app stuff</span>
+  <span class="p">.</span>
+  <span class="p">.</span>
+  <span class="p">.</span>
+
+<span class="c1">// show another interstital ad (Note that we do not need to call</span>
+<span class="c1">// prepareInterstitial() again)</span>
+<span class="nx">tft</span><span class="p">.</span><span class="nx">showInterstital</span><span class="p">();</span>
+</pre></div>
+
+<h4>prepareAppWall(): void</h4>
+
+<p>This prepares the app wall ad type. This method only needs to be called once
+and must be called before any calls to showAppWall() will work.</p>
+
+<p>Usage:</p>
+
+<div class="highlight"><pre><span class="c1">// Get a reference to the Tap for Tap context</span>
+<span class="kd">var</span> <span class="nx">tft</span><span class="o">:</span> <span class="nx">TapForTap</span> <span class="o">=</span> <span class="nx">TapForTap</span><span class="p">.</span><span class="nx">instance</span><span class="p">;</span>
+
+<span class="c1">// Prepare the app wall ad type</span>
+<span class="nx">tft</span><span class="p">.</span><span class="nx">prepareAppWall</span><span class="p">();</span>
+</pre></div>
+
+<h4>showAppWall(): void</h4>
+
+<p>This shows an app wall ad. Remember that you must call prepareAppWall() once
+before calling showAppWall(). Afterwards you only need to call showAppWall()
+to show a new app wall ad.</p>
+
+<p>Usage:</p>
+
+<div class="highlight"><pre><span class="c1">// Get a reference to the Tap for Tap context</span>
+<span class="kd">var</span> <span class="nx">tft</span><span class="o">:</span> <span class="nx">TapForTap</span> <span class="o">=</span> <span class="nx">TapForTap</span><span class="p">.</span><span class="nx">instance</span><span class="p">;</span>
+
+<span class="c1">// tft the app wall ad type</span>
+<span class="nx">TapForTap</span><span class="p">.</span><span class="nx">prepareAppWall</span><span class="p">();</span>
+
+<span class="c1">// show an interstitial ad</span>
+<span class="nx">tft</span><span class="p">.</span><span class="nx">showAppWall</span><span class="p">();</span>
+
+<span class="c1">// do some different neat app stuff</span>
+  <span class="p">.</span>
+  <span class="p">.</span>
+  <span class="p">.</span>
+
+<span class="c1">// show another app wall ad (Note that we do not need to call</span>
+<span class="c1">// prepareAppWall() again)</span>
+<span class="nx">tft</span><span class="p">.</span><span class="nx">showwAppWall</span><span class="p">();</span>
+</pre></div>
+
+<h4>setYearOfBirth(yearOfBirth: int): void</h4>
+
+<p>Sets the user's year of birth.</p>
+
+<p>Usage:</p>
+
+<div class="highlight"><pre><span class="c1">// Get a reference to the Tap for Tap context</span>
+<span class="kd">var</span> <span class="nx">tft</span><span class="o">:</span> <span class="nx">TapForTap</span> <span class="o">=</span> <span class="nx">TapForTap</span><span class="p">.</span><span class="nx">instance</span><span class="p">;</span>
+
+<span class="c1">// Set the year of birth</span>
+<span class="nx">tft</span><span class="p">.</span><span class="nx">setYearOfBirth</span><span class="p">(</span><span class="mi">1990</span><span class="p">);</span>
+</pre></div>
+
+<h4>setGender(gender: int): void</h4>
+
+<p>Set the user's gender. There are static constants provided in the TapForTap API.</p>
+
+<ul>
+<li>TapForTap.GENDER_MALE</li>
+<li>TapForTap.GENDER_FEMALE</li>
+<li>TapForTap.GENDER_NONE</li>
+</ul><p>Usage:</p>
+
+<div class="highlight"><pre><span class="c1">// Get a reference to the Tap for Tap context</span>
+<span class="kd">var</span> <span class="nx">tft</span><span class="o">:</span> <span class="nx">TapForTap</span> <span class="o">=</span> <span class="nx">TapForTap</span><span class="p">.</span><span class="nx">instance</span><span class="p">;</span>
+
+<span class="c1">// Set the gender</span>
+<span class="nx">tft</span><span class="p">.</span><span class="nx">setGender</span><span class="p">(</span><span class="nx">TapForTap</span><span class="p">.</span><span class="nx">GENDER_MALE</span><span class="p">);</span>
+
+</pre></div>
+
+<h4>setLocation(latitude: Number, longitude: Number): void</h4>
+
+<p>Sets the user's location in terms of latitiude and longitude.</p>
+
+<p>Usage:</p>
+
+<div class="highlight"><pre><span class="c1">// Get a reference to the Tap for Tap context</span>
+<span class="kd">var</span> <span class="nx">tft</span><span class="o">:</span> <span class="nx">TapForTap</span> <span class="o">=</span> <span class="nx">TapForTap</span><span class="p">.</span><span class="nx">instance</span><span class="p">;</span>
+
+<span class="c1">// Set the location</span>
+<span class="nx">tft</span><span class="p">.</span><span class="nx">setLocation</span><span class="p">(</span><span class="mf">111.1</span><span class="p">,</span> <span class="mf">222.2</span><span class="p">);</span>
+</pre></div>
+
+<h4>setUserAccountId(userAccountId: String): void</h4>
+
+<p>Sets the user account id. This is a custom id that can be 
+set to anything.</p>
+
+<p>Usage:</p>
+
+<div class="highlight"><pre><span class="c1">// Get a reference to the Tap for Tap context</span>
+<span class="kd">var</span> <span class="nx">tft</span><span class="o">:</span> <span class="nx">TapForTap</span> <span class="o">=</span> <span class="nx">TapForTap</span><span class="p">.</span><span class="nx">instance</span><span class="p">;</span>
+
+<span class="c1">// Set the user account id</span>
+<span class="nx">tft</span><span class="p">.</span><span class="nx">setUserAccountId</span><span class="p">(</span><span class="s2">"the user's account Id"</span><span class="p">);</span>
+</pre></div>
+
+<h2>Support</h2>
+
+<p>Things don't always go according to plan. If you hit a snag somewhere and need a
+hand don't hesitate to get in touch with us at
+<a href="mailto:support@tapfortap.com">support@tapfortap.com</a> with Adobe Air in the subject line
+or on Twitter where we go by the swanky handle 
+<a href="https://twitter.com/tapfortap">@tapfortap</a>. </p>
+
+<h2>License</h2>
+
+<p>Licensed under the terms of the MIT License.</p>
+
+<h1>Copyright © 2012 Tap for Tap Promotions Inc.AdobeAir</h1>
+      </section>
+    </div>
+
+    
+  </body>
+</html>
