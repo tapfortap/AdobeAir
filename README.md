@@ -13,22 +13,23 @@ This Application Native Extension was built using Adobe Air 3.5 SDK.
   - An OS X machine running Lion (10.7)
   - iOS 6.0 SDK
 
-Note that the iPhone app cannot be built on a Windows machine wusing the Adobe Flex 4.6 SDK.
+Note that the iPhone app cannot be built on a Windows machine using the Adobe Flex 4.6 SDK.
 The iOS SDK included with Adobe Flex is too old.
 
 
 ## Setup
 If you don't have the native extension yet then head over to the [downloads page](https://github.com/tapfortap/AdobeAir/downloads).
 
-Installing the Tap for Tap native extension is super easy. This isn't an Adobe Air 
-or Adobe Flash Builder tutorial so we assume that you have aFlex Mobile project(s) 
+Installing the Tap for Tap native extension is easy. This isn't an Adobe Air 
+or Adobe Flash Builder tutorial so we assume that you have a Flex Mobile project
 already set up and working. All you need to do is add the `tapfortap.ane` file to
-your project. If you do not know how to do that there is a brief explanation below
-and there are plenty of examples out on the internet.
+your project. If you do not know how to add a native extension there is a brief
+explanation below
+
 
 ### Flash Builder 4.6
 
-If you do not now how to add a Native Extension to your project in Flash Builder
+#### Adding the Native Extension to the Project
 
 1. Right click on your project and select properties.
 2. Click `Flex Build Path` in the left hand list.
@@ -38,7 +39,7 @@ If you do not now how to add a Native Extension to your project in Flash Builder
 
 #### Setup Building for iOS
 
-Remember that the iPhone build requires iOS SDK 6 (i.e. it must be built 
+Remember that building for iPhone requires iOS SDK 6 (i.e. it must be built 
 on a machine running at least OS X Lion 10.7)
 
 1. Right click on your project and select properties.
