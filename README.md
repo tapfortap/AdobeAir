@@ -10,7 +10,7 @@ This Application Native Extension was built using Adobe Air 3.5 SDK.
   - None
 
 #### iPhone
-  - An OSX machine running Lion (10.7.x)
+  - An OS X machine running Lion (10.7)
   - iOS 6.0 SDK
 
 Note that the iPhone app cannot be built on a Windows machine wusing the Adobe Flex 4.6 SDK.
@@ -38,8 +38,8 @@ If you do not now how to add a Native Extension to your project in Flash Builder
 
 #### Setup Building for iOS
 
-Remember that the iPhone build requires iOS SDK 6 (ie it must be built 
-on a machine running at least OSX Lion 10.7)
+Remember that the iPhone build requires iOS SDK 6 (i.e. it must be built 
+on a machine running at least OS X Lion 10.7)
 
 1. Right click on your project and select properties.
 2. Expand `Flex Build Packaging` on the left hand menu
