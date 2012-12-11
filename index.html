@@ -1,33 +1,44 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
-    <meta charset='utf-8'>
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Adobe Air by tapfortap</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/main.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
-
-    <title>Tap for Tap Adobe Air Plugin by tapfortap</title>
   </head>
-
   <body>
 
-    <header>
-      <div class="container">
-        <h1>Tap for Tap Adobe Air Plugin</h1>
-        <h2></h2>
+      <header>
+        <h1>Adobe Air</h1>
+        <p>Adobe Air Tap for Tap Plugin</p>
+      </header>
 
-        <section id="downloads">
-          <a href="https://github.com/tapfortap/AdobeAir/zipball/master" class="btn">Download as .zip</a>
-          <a href="https://github.com/tapfortap/AdobeAir/tarball/master" class="btn">Download as .tar.gz</a>
-          <a href="https://github.com/tapfortap/AdobeAir" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
-        </section>
-      </div>
-    </header>
+      <div id="banner">
+        <span id="logo"></span>
 
-    <div class="container">
-      <section id="main_content">
+        <a href="https://github.com/tapfortap/AdobeAir" class="button fork"><strong>View On GitHub</strong></a>
+        <div class="downloads">
+          <span>Downloads:</span>
+          <ul>
+            <li><a href="https://github.com/tapfortap/AdobeAir/zipball/master" class="button">ZIP</a></li>
+            <li><a href="https://github.com/tapfortap/AdobeAir/tarball/master" class="button">TAR</a></li>
+          </ul>
+        </div>
+      </div><!-- end banner -->
+
+    <div class="wrapper">
+      <nav>
+        <ul></ul>
+      </nav>
+      <section>
         <h1>Tap for Tap Adobe Air Native Extension</h1>
 
 <p>Want to use Tap for Tap with Adobe Air? We got you covered on Android and iOS (+ iPhone simulator).</p>
@@ -47,22 +58,22 @@
 <ul>
 <li>An OS X machine running Lion (10.7)</li>
 <li>iOS 6.0 SDK</li>
-</ul><p>Note that the iPhone app cannot be built on a Windows machine wusing the Adobe Flex 4.6 SDK.
+</ul><p>Note that the iPhone app cannot be built on a Windows machine using the Adobe Flex 4.6 SDK.
 The iOS SDK included with Adobe Flex is too old.</p>
 
 <h2>Setup</h2>
 
 <p>If you don't have the native extension yet then head over to the <a href="https://github.com/tapfortap/AdobeAir/downloads">downloads page</a>.</p>
 
-<p>Installing the Tap for Tap native extension is super easy. This isn't an Adobe Air 
-or Adobe Flash Builder tutorial so we assume that you have aFlex Mobile project(s) 
+<p>Installing the Tap for Tap native extension is easy. This isn't an Adobe Air 
+or Adobe Flash Builder tutorial so we assume that you have a Flex Mobile project
 already set up and working. All you need to do is add the <code>tapfortap.ane</code> file to
-your project. If you do not know how to do that there is a brief explanation below
-and there are plenty of examples out on the internet.</p>
+your project. If you do not know how to add a native extension there is a brief
+explanation below</p>
 
 <h3>Flash Builder 4.6</h3>
 
-<p>If you do not now how to add a Native Extension to your project in Flash Builder</p>
+<h4>Adding the Native Extension to the Project</h4>
 
 <ol>
 <li>Right click on your project and select properties.</li>
@@ -72,7 +83,7 @@ and there are plenty of examples out on the internet.</p>
 <li>Browse to where you downloaded the Tap for Tap native extenion abd select <code>tapfortap.ane</code> and open it</li>
 </ol><h4>Setup Building for iOS</h4>
 
-<p>Remember that the iPhone build requires iOS SDK 6 (i.e. it must be built 
+<p>Remember that building for iPhone requires iOS SDK 6 (i.e. it must be built 
 on a machine running at least OS X Lion 10.7)</p>
 
 <ol>
@@ -84,6 +95,7 @@ on a machine running at least OS X Lion 10.7)</p>
 </li>
 <li>Click on the <code>Native Extensions</code> tab</li>
 <li>Check the box under the <code>Package</code> column</li>
+<li>Add the path to the iPhone 6 SDK</li>
 </ol><h4>Setup Building for Android</h4>
 
 <ol>
@@ -95,11 +107,21 @@ on a machine running at least OS X Lion 10.7)</p>
 </li>
 <li>Click on the <code>Native Extensions</code> tab</li>
 <li>Check the box under the <code>Package</code> column</li>
-<li>Add the <code>android.permission.INTERNET</code> to your <code>app.xml</code>
+<li>Add the following permissions to the app.xml
+
+<ul>
+<li><code>&lt;uses-permission android:name="android.permission.INTERNET" /&gt;</code></li>
+<li><code>&lt;uses-permission android:name="android.permission.READ_PHONE_STATE" /&gt;</code></li>
+<li><code>&lt;uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /&gt;</code></li>
+<li><code>&lt;uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /&gt;</code></li>
+<li><code>&lt;uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /&gt;</code></li>
+</ul>
 </li>
-<li>Add the <code>android.permission.ACCESS_NETWORK_STATE</code> to your <code>app.xml</code>
-</li>
-<li>Include the activity <code>com.tapfortap.TapForTapActivity</code> in the <code>app.xml</code>
+<li>Include the TapForTap activity in the <code>app.xml</code>
+
+<ul>
+<li><code>&lt;activity android:name="com.tapfortap.TapForTapActivity"/&gt;</code></li>
+</ul>
 </li>
 </ol><h3>Setup building with the Command Line or Ant</h3>
 
@@ -197,8 +219,8 @@ ad should be removed and recreated.</p>
 
 <h4>prepareInterstitial(): void</h4>
 
-<p>This prepares the interstial ad type. This method only needs to be called once
-and must be called before any calls to showInterstitial() will work.</p>
+<p>This prepares the interstial ad type. This method only needs to be called once, 
+after the interstitial is shown we automatically prepare another one for you.</p>
 
 <p>Usage:</p>
 
@@ -237,8 +259,8 @@ to show a new interstitial ad.</p>
 
 <h4>prepareAppWall(): void</h4>
 
-<p>This prepares the app wall ad type. This method only needs to be called once
-and must be called before any calls to showAppWall() will work.</p>
+<p>This prepares the app wall ad type. This method only needs to be called once, 
+after the app wall is shown we automatically prepare another one for you.</p>
 
 <p>Usage:</p>
 
@@ -334,22 +356,38 @@ set to anything.</p>
 <span class="nx">tft</span><span class="p">.</span><span class="nx">setUserAccountId</span><span class="p">(</span><span class="s2">"the user's account Id"</span><span class="p">);</span>
 </pre></div>
 
-<h2>Support</h2>
+<hr><h1></h1>
 
-<p>Things don't always go according to plan. If you hit a snag somewhere and need a
-hand don't hesitate to get in touch with us at
-<a href="mailto:support@tapfortap.com">support@tapfortap.com</a> with Adobe Air in the subject line
-or on Twitter where we go by the swanky handle 
-<a href="https://twitter.com/tapfortap">@tapfortap</a>. </p>
+<h1>Footer</h1>
 
-<h2>License</h2>
+<h2><a href="http://tapfortap.github.com/Documentation/">Back To Documentaion</a></h2>
+
+<h3><em>Support</em></h3>
+
+<p>Things don't always go according to plan. If you hit a snag somewhere and need a hand don't hesitate to get in touch with us at <a href="mailto:support@tapfortap.com">support@tapfortap.com</a> or on Zendesk <a href="https://tapfortap.zendesk.com/anonymous_requests/new">here</a>.</p>
+
+<h3><em>License</em></h3>
 
 <p>Licensed under the terms of the MIT License.</p>
 
-<h1>Copyright © 2012 Tap for Tap Promotions Inc.</h1>
+<p>Copyright © 2012 Tap for Tap Promotions Inc.</p>
       </section>
+      <footer>
+        <p>Project maintained by <a href="https://github.com/tapfortap">tapfortap</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="http://twitter.com/#!/michigangraham">mattgraham</a></small></p>
+      </footer>
     </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-32413960-4");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
 
-    
   </body>
 </html>
