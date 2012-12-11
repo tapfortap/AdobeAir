@@ -49,6 +49,7 @@ on a machine running at least OS X Lion 10.7)
 5. Click on the `Digital Signature` tab and provide your `Certificate` and `Provisioning file`
 6. Click on the `Native Extensions` tab
 7. Check the box under the `Package` column
+8. Add the path to the iPhone 6 SDK
 
 #### Setup Building for Android
 1. Right click on your project and select properties.
