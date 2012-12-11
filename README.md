@@ -58,9 +58,14 @@ on a machine running at least OS X Lion 10.7)
 5. Click on the `Digital Signature` tab and provide your `Certificate`
 6. Click on the `Native Extensions` tab
 7. Check the box under the `Package` column
-8. Add the `android.permission.INTERNET` to your `app.xml`
-9. Add the `android.permission.ACCESS_NETWORK_STATE` to your `app.xml`
-10. Include the activity `com.tapfortap.TapForTapActivity` in the `app.xml`
+8. Add the following permissions to the app.xml
+  - `<uses-permission android:name="android.permission.INTERNET" />`
+  - `<uses-permission android:name="android.permission.READ_PHONE_STATE" />`
+  - `<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />`
+  - `<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />`
+  - `<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />`
+10. Include the TapForTap activity in the `app.xml`
+  - `<activity android:name="com.tapfortap.TapForTapActivity"/>`
 
 ### Setup building with the Command Line or Ant
 1. Add the option `-extDir` givint it the path to the folder to where `tapfortap.ane` is located.
