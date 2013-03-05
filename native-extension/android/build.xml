@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<project name="TapForTapAir TapForTapAir.jar " default="jar" basedir=".">
+
+    <property environment="env"/>
+    <property name="release-path" value="release"/>
+    <property name="binary-name" value="TapForTapAir.jar"/>
+
+    <target name="release" depends="clean, jar"/>
+
+    <target name="jar" depends="compile">
+        <mkdir dir="${release-path}"/>
+        <unzip src="libs/TapForTap.jar" dest="${release-path}/classes"/>
+        <jar destfile="${release-path}/${binary-name}" basedir="${release-path}/classes" filesetmanifest="mergewithoutmain"/>
+        <delete dir="${release-path}/classes" />
+    </target>
+
+    <target name="compile">
+        <mkdir dir="${release-path}/classes"/>
+        <javac srcdir="src" destdir="${release-path}/classes" includes="com/tapfortap/ane/**"
+            classpath="${env.FLEX_SDK}/lib/android/FlashRuntimeExtensions.jar:libs/TapForTap.jar:${env.ANDROID_SDK}/platforms/android-${env.ANDROID_TARGET}/android.jar" includeantruntime="false"/>
+    </target>
+
+    <target name="clean">
+        <delete dir="${release-path}" />
+    </target>
+</project>

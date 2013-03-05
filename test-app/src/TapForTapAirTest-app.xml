@@ -1,0 +1,48 @@
+ <!-- 
+Licensed under the MIT license
+http://htmlpreview.github.com/?https://github.com/tapfortap/Documentation/blob/master/License.html
+Copyright (c) 2013 Tap for Tap 
+-->
+
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<application xmlns="http://ns.adobe.com/air/application/3.1">
+	<id>com.tapfortap.air.test</id>
+	<filename>TapForTapAirTest</filename>
+	<name>Tap for Tap Air Test</name>
+	<versionNumber>0.0.1</versionNumber>
+	<initialWindow>
+		<content>TapForTapAirTest.swf</content>
+		<title>Tap for Tap Air Test</title>
+		<autoOrients>true</autoOrients>
+        <fullScreen>false</fullScreen>
+        <visible>true</visible>
+        <softKeyboardBehavior>none</softKeyboardBehavior>
+    </initialWindow>
+
+	<android>
+        <colorDepth>16bit</colorDepth>
+        <manifestAdditions>
+			<manifest android:installLocation="auto">
+				<uses-permission android:name="android.permission.INTERNET"/>
+				<uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+			    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+			    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+			    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+			    
+			    <application android:enabled="true">
+					<activity android:name="com.tapfortap.TapForTapActivity"/>
+				</application>
+			    
+			</manifest>
+			
+		</manifestAdditions>
+    </android>
+    
+    <iPhone>
+        <requestedDisplayResolution>high</requestedDisplayResolution>
+    </iPhone>
+    
+	<extensions>
+        <extensionID>com.tapfortap.ane</extensionID>
+    </extensions>
+</application>

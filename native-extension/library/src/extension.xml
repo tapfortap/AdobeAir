@@ -1,0 +1,32 @@
+ <!--
+Licensed under the MIT license
+http://htmlpreview.github.com/?https://github.com/tapfortap/Documentation/blob/master/License.html
+Copyright (c) 2013 Tap for Tap
+-->
+
+<extension xmlns="http://ns.adobe.com/air/extension/3.1">
+     <id>com.tapfortap.ane</id>
+     <versionNumber>0.0.3</versionNumber>
+     <platforms>
+          <platform name="iPhone-ARM">
+               <applicationDeployment>
+                    <nativeLibrary>libTapForTapAir.a</nativeLibrary>
+                    <initializer>TapForTapExtensionInitializer</initializer>
+                    <finalizer>TapForTapExtensionFinalizer</finalizer>
+               </applicationDeployment>
+          </platform>
+          <platform name="iPhone-x86">
+               <applicationDeployment>
+                    <nativeLibrary>libTapForTapAir.a</nativeLibrary>
+                    <initializer>TapForTapExtensionInitializer</initializer>
+                    <finalizer>TapForTapExtensionFinalizer</finalizer>
+               </applicationDeployment>
+          </platform>
+          <platform name="Android-ARM">
+               <applicationDeployment>
+                    <nativeLibrary>TapForTapAir.jar</nativeLibrary>
+                    <initializer>com.tapfortap.ane.TapForTapExtension</initializer>
+               </applicationDeployment>
+          </platform>
+     </platforms>
+</extension>

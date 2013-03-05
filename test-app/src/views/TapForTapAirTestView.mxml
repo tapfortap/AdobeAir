@@ -1,0 +1,54 @@
+ <!-- 
+Licensed under the MIT license
+http://htmlpreview.github.com/?https://github.com/tapfortap/Documentation/blob/master/License.html
+Copyright (c) 2013 Tap for Tap 
+-->
+
+<?xml version="1.0" encoding="utf-8"?>
+<s:View xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		xmlns:s="library://ns.adobe.com/flex/spark" title="HomeView">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<fx:Script>
+		<![CDATA[
+			
+			import com.tapfortap.ane.TapForTap;
+			
+			public function showBannerAd(): void {
+				var tft: TapForTap = TapForTap.instance;
+				tft.createAdView(false);
+			}
+			
+			public function hideBannerAd(): void {
+				var tft: TapForTap = TapForTap.instance;
+				tft.removeAdView();
+			}
+			
+			public function showInterstitial(): void {
+				var tft: TapForTap = TapForTap.instance;
+				tft.showInterstitial(); 
+			}
+			
+			public function showAppWall(): void {
+				var tft: TapForTap = TapForTap.instance;
+				tft.showAppWall(); 
+			}
+		]]>
+	</fx:Script>
+	
+	<s:VGroup width="100%" height="100%" y="100" horizontalAlign="center">
+		<s:Button label="Show Banner Ad" click="showBannerAd()" styleName="next"/>
+	</s:VGroup>
+	<s:VGroup width="100%" height="100%" y="200" horizontalAlign="center">
+		<s:Button label="Hide Banner Ad" click="hideBannerAd()" styleName="next"/>
+	</s:VGroup>
+	<s:VGroup width="100%" height="100%" y="300" horizontalAlign="center">
+		<s:Button label="Show Interstitial" click="showInterstitial()" styleName="next"/>
+	</s:VGroup>
+	<s:VGroup width="100%" height="100%" y="400" horizontalAlign="center">
+		<s:Button label="Show App Wall" click="showAppWall()" styleName="next"/>
+	</s:VGroup>
+	
+</s:View>
