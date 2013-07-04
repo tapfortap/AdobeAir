@@ -10,17 +10,18 @@ import android.util.Log;
 
 import com.adobe.fre.FREContext;
 import com.adobe.fre.FREExtension;
+import com.tapfortap.TapForTap;
 
 public class TapForTapExtension implements FREExtension {
     private static final String TAG = TapForTapExtension.class.getName();
     @Override
     public void initialize() {
-        Log.d(TAG, "TapForTapExtension initialized");
+        TapForTap.plugin = "air";
+        TapForTap.pluginVersion = "1.1.0";
     }
 
     @Override
     public FREContext createContext(String s) {
-        Log.d(TAG, "TapForTapExtension create context");
         return new TapForTapExtensionContext();
     }
 

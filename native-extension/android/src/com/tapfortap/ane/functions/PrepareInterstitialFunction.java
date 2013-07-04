@@ -12,11 +12,15 @@ import com.adobe.fre.FREObject;
 import com.adobe.fre.FREWrongThreadException;
 import com.tapfortap.Interstitial;
 
+import com.tapfortap.ane.functions.InterstitialListenerImplementation;
+
 public class PrepareInterstitialFunction implements FREFunction {
 
 	@Override
 	public FREObject call(FREContext freContext, FREObject[] freObjects) {
-		Interstitial.prepare(freContext.getActivity());
+		InterstitialListenerImplementation listener = new InterstitialListenerImplementation(freContext);
+		Interstitial.prepare(freContext.getActivity(), listener);
+		Interstitial.setListener(listener);
 		try {
 			return FREObject.newObject(true);
 		} catch (FREWrongThreadException e) {

@@ -18,8 +18,6 @@ public class InitializeWithApiKeyFunction implements FREFunction {
     @Override
     public FREObject call(final FREContext freContext, final FREObject[] freObjects) {
         try {
-            TapForTap.plugin = "air";
-            TapForTap.pluginVersion = "1.0.0";
             TapForTap.initialize(freContext.getActivity(), freObjects[0].getAsString());
             return FREObject.newObject(true);
         } catch (FREWrongThreadException e) {

@@ -1,20 +1,16 @@
- <!-- 
-Licensed under the MIT license
-http://htmlpreview.github.com/?https://github.com/tapfortap/Documentation/blob/master/License.html
-Copyright (c) 2013 Tap for Tap 
--->
-
 <?xml version="1.0" encoding="utf-8"?>
-<s:ViewNavigatorApplication xmlns:fx="http://ns.adobe.com/mxml/2009" 
+<s:ViewNavigatorApplication xmlns:fx="http://ns.adobe.com/mxml/2009"
 							xmlns:s="library://ns.adobe.com/flex/spark" firstView="views.TapForTapAirTestView" applicationDPI="160"
 							creationComplete="initializeTapForTap()">
 	<fx:Script>
 			import com.tapfortap.ane.TapForTap;
-			
+
+
 			public function initializeTapForTap(): void {
 				var tft: TapForTap = TapForTap.instance;
-				tft.initializeWithApiKey("4b4037be19c7bbc168e799fd044c5063");
-				tft.setMode("development");
+                tft.setMode("development");
+				tft.initializeWithApiKey("1a5c984d14f48bcb875913fab43c54b9");
 			}
+
 	</fx:Script>
 </s:ViewNavigatorApplication>

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4A1B95D1165B126F0088F0DB /* libTapForTapAds.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A1B95D0165B126F0088F0DB /* libTapForTapAds.a */; };
+		4A5DBB21177510E800E2236C /* TapForTapAirEventHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A5DBB20177510E800E2236C /* TapForTapAirEventHelper.m */; };
 		4AB3FAE01655DE7500583A02 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AB3FADF1655DE7500583A02 /* Foundation.framework */; };
 		4ADB233F16E138F2001068AF /* TapForTapAir.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ADB233D16E138F2001068AF /* TapForTapAir.m */; };
 /* End PBXBuildFile section */
@@ -26,6 +27,8 @@
 
 /* Begin PBXFileReference section */
 		4A1B95D0165B126F0088F0DB /* libTapForTapAds.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTapForTapAds.a; sourceTree = "<group>"; };
+		4A5DBB1F177510E800E2236C /* TapForTapAirEventHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TapForTapAirEventHelper.h; sourceTree = "<group>"; };
+		4A5DBB20177510E800E2236C /* TapForTapAirEventHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TapForTapAirEventHelper.m; sourceTree = "<group>"; };
 		4AAFB3E916E58805009D8737 /* FlashRuntimeExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FlashRuntimeExtensions.h; path = "../../../../../../../Shared/flex-sdk-4.6-macosx/include/FlashRuntimeExtensions.h"; sourceTree = "<group>"; };
 		4AB3FADC1655DE7500583A02 /* libTapForTapAir.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libTapForTapAir.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		4AB3FADF1655DE7500583A02 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -84,6 +87,8 @@
 		4AB3FAE11655DE7500583A02 /* TapForTapAir */ = {
 			isa = PBXGroup;
 			children = (
+				4A5DBB1F177510E800E2236C /* TapForTapAirEventHelper.h */,
+				4A5DBB20177510E800E2236C /* TapForTapAirEventHelper.m */,
 				4AAFB3E916E58805009D8737 /* FlashRuntimeExtensions.h */,
 				4ADB233D16E138F2001068AF /* TapForTapAir.m */,
 				4ADB233C16E138DA001068AF /* TapForTapAir.h */,
@@ -181,6 +186,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4ADB233F16E138F2001068AF /* TapForTapAir.m in Sources */,
+				4A5DBB21177510E800E2236C /* TapForTapAirEventHelper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

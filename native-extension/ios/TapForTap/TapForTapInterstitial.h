@@ -10,6 +10,9 @@
 #import <UIKit/UIKit.h>
 
 @protocol TapForTapInterstitialDelegate <NSObject>
+@optional
+- (void) tapForTapInterstitialDidReceiveAd;
+- (void) tapForTapInterstitialDidShow;
 - (void) tapForTapInterstitialWasDismissed;
 - (void) tapForTapInterstitialFailedToDownload: (NSString *) reason;
 @end
@@ -19,6 +22,7 @@
 @interface TapForTapInterstitial : NSObject
 
 + (void) prepare;
++ (void) prepareWithDelegate: (id<TapForTapInterstitialDelegate>) delegate;
 + (BOOL) isReady;
 + (void) setDelegate: (id<TapForTapInterstitialDelegate>) delegate;
 + (id<TapForTapInterstitialDelegate>) delegate;

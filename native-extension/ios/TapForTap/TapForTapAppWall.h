@@ -10,6 +10,9 @@
 #import <UIKit/UIKit.h>
 
 @protocol TapForTapAppWallDelegate <NSObject>
+@optional
+- (void) tapForTapAppWallDidReceiveAd;
+- (void) tapForTapAppWallDidShow;
 - (void) tapForTapAppWallWasDismissed;
 - (void) tapForTapAppWallFailedToDownload: (NSString *) reason;
 @end
@@ -19,6 +22,7 @@
 @interface TapForTapAppWall : NSObject
 
 + (void) prepare;
++ (void) prepareWithDelegate: (id<TapForTapAppWallDelegate>) delegate;
 + (BOOL) isReady;
 + (void) setDelegate: (id<TapForTapAppWallDelegate>) delegate;
 + (id<TapForTapAppWallDelegate>) delegate;

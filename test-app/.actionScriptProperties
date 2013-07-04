@@ -28,7 +28,7 @@
         </excludedEntries>
       </libraryPathEntry>
       <libraryPathEntry kind="1" linkType="1" path="libs"/>
-      <libraryPathEntry kind="5" linkType="2" path="/Users/phil/Dropbox/tapfortap-phil/tapfortap-air/plugin/package/TapForTap.ane"/>
+      <libraryPathEntry kind="5" linkType="2" path="/Users/phil/Dropbox/tapfortap-phil/AdobeAir/native-extension/release/tapfortap.ane "/>
     </libraryPath>
     <sourceAttachmentPath/>
   </compiler>
@@ -51,10 +51,10 @@
     </buildTarget>
     <buildTarget airDownloadURL="" androidSettingsVersion="1" buildTargetName="com.adobe.flexide.multiplatform.android.platform">
       <multiPlatformSettings enabled="true" includePlatformLibs="false" platformID="com.adobe.flexide.multiplatform.android.platform" version="2"/>
-      <airSettings airCertificatePath="/Users/phil/Dropbox/tapfortap-phil/tapfortap-air/test-app/build/tapForTapTest.p12" airTimestamp="true" anePathSet="true" version="1">
+      <airSettings airCertificatePath="/Users/phil/Dropbox/tapfortap-phil/AdobeAir/test-app/build/tapForTapTest.p12" airTimestamp="true" anePathSet="true" version="1">
         <airExcludes/>
         <anePaths>
-          <anePathEntry path="/Users/phil/Dropbox/tapfortap-phil/tapfortap-air/plugin/package/TapForTap.ane"/>
+          <anePathEntry path="/Users/phil/Dropbox/tapfortap-phil/AdobeAir/native-extension/release/tapfortap.ane"/>
         </anePaths>
       </airSettings>
       <actionScriptSettings version="1"/>

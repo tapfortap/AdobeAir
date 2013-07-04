@@ -10,13 +10,18 @@ import com.adobe.fre.FREContext;
 import com.adobe.fre.FREFunction;
 import com.adobe.fre.FREObject;
 import com.adobe.fre.FREWrongThreadException;
+
 import com.tapfortap.AppWall;
 
+import com.tapfortap.ane.functions.AppWallListenerImplementation;
+
 public class PrepareAppWallFunction implements FREFunction {
-	
+
 	@Override
 	public FREObject call(FREContext freContext, FREObject[] args) {
-		AppWall.prepare(freContext.getActivity());
+		AppWallListenerImplementation listener = new AppWallListenerImplementation(freContext);
+		AppWall.prepare(freContext.getActivity(), listener);
+		AppWall.setListener(listener);
 		try {
 			return FREObject.newObject(true);
 		} catch (FREWrongThreadException e) {

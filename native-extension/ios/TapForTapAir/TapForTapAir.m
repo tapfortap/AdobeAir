@@ -1,167 +1,217 @@
-/* 
+/*
  * Licensed under the MIT license
  * http://htmlpreview.github.com/?https://github.com/tapfortap/Documentation/blob/master/License.html
  * Copyright (c) 2013 Tap for Tap
  */
 
 #import "FlashRuntimeExtensions.h"
+
 #import "TapForTap.h"
+
+#import "TapForTapAir.h"
+#import "TapForTapAirEventHelper.h"
+
+#define DEFINE_ANE_FUNCTION(fn) FREObject (fn)(FREContext freContext, void* functionData, uint32_t argc, FREObject freObjects[])
+#define MAP_FUNCTION(fn, data) { (const uint8_t*)(#fn), (data), &(fn) }
+
+#define TOP  1
+#define CENTER 2
+#define BOTTOM 3
+#define LEFT 1
+#define RIGHT 3
 
 TapForTapAdView* adView = nil;
 UIView* applicationView = nil;
 UIViewController* applicationViewController = nil;
 
-FREObject initializeWithApiKey(FREContext ctx, void* funcData, uint32_t argc, FREObject argv[])
+void setInterstitialDelegate(FREContext *freContext);
+void setAppWallDelegate(FREContext *freContext);
+void showAd(FREContext *freContext, int32_t horiztonalAligment, int32_t verticalAlignment, int32_t xOffset, int32_t yOffset, double scale);
+
+DEFINE_ANE_FUNCTION(initializeWithApiKey)
 {
-    NSLog(@"Entering initializeWithApiKey()");
     const uint8_t* apiKeyArray = NULL;
     uint32_t length = 0;
-    FREGetObjectAsUTF8(argv[0], &length, &apiKeyArray);
-    NSString* apiKey = [NSString stringWithUTF8String:apiKeyArray];
-
-    [TapForTap performSelector: @selector(_setPlugin:) withObject: @"air"];
-    [TapForTap performSelector: @selector(_setPluginVersion:) withObject: @"1.0.0"];
+    FREGetObjectAsUTF8(freObjects[0], &length, &apiKeyArray);
+    NSString* apiKey = [NSString stringWithUTF8String:(const char *)apiKeyArray];
 
     [TapForTap initializeWithAPIKey: apiKey];
 
     FREObject result = nil;
     FRENewObjectFromBool(true, &result);
-    NSLog(@"Exiting initializeWithApiKey()");
     return result;
 }
 
-FREObject createAdView(FREContext context, void* funcData, uint32_t argc, FREObject argv[])
+void showAd(FREContext *freContext, int32_t horiztonalAligment, int32_t verticalAlignment, int32_t xOffset, int32_t yOffset, double scale)
 {
-    NSLog(@"Entering createAddView()");
+    CGRect rect = applicationViewController.view.bounds;
+    float viewHeight = rect.size.height;
+    float viewWidth = rect.size.width;
 
-    if(adView != nil)
-    {
-        [adView removeFromSuperview];
-        [adView release];
-        adView = nil;
-    }
+    int32_t width = (uint32_t)(320 * scale);
+    int32_t height = (uint32_t)(50 * scale);
 
-    uint32_t displayAtTop = 0;
-    FREGetObjectAsBool(argv[0], &displayAtTop);
-    
-    uint32_t yCoordinate = applicationView.frame.size.height - 50;
-    if(displayAtTop == TRUE) {
-        yCoordinate = 0;
-    }
-    
-    uint32_t xCoordinate = (applicationView.frame.size.width - 320) / 2;
-    uint32_t width = 320;
-    uint32_t height = 50;
-    
-    if ( UIDeviceOrientationIsLandscape(applicationViewController.interfaceOrientation))
-    {
-        if(displayAtTop == TRUE)
-        {
+    int32_t xCoordinate = 0;
+    int32_t yCoordinate = 0;
+    int32_t autoResizingMask = 0;
+
+    switch (verticalAlignment) {
+        case TOP:
             yCoordinate = 0;
-        } else
-        {
-            yCoordinate = applicationView.frame.size.width - 50;
-        }
-
-        xCoordinate = (applicationView.frame.size.height - 320) / 2;
+            autoResizingMask |= UIViewAutoresizingFlexibleBottomMargin;
+            break;
+        case CENTER:
+            yCoordinate = (viewHeight - height) / 2;
+            autoResizingMask |= UIViewAutoresizingFlexibleBottomMargin;
+            autoResizingMask |= UIViewAutoresizingFlexibleTopMargin;
+            break;
+        case BOTTOM:
+            yCoordinate = (viewHeight - height);
+            autoResizingMask |= UIViewAutoresizingFlexibleTopMargin;
+            break;
+        default:
+            yCoordinate = (viewHeight - height);
+            autoResizingMask |= UIViewAutoresizingFlexibleTopMargin;
+            break;
     }
-    
-    adView = [[TapForTapAdView alloc] initWithFrame:CGRectMake(xCoordinate, yCoordinate, width, height)];
-    
+
+
+    switch (horiztonalAligment) {
+        case LEFT:
+            xCoordinate = 0;
+            autoResizingMask |= UIViewAutoresizingFlexibleRightMargin;
+            break;
+        case CENTER:
+            xCoordinate = (viewWidth - width) / 2;
+            autoResizingMask |= UIViewAutoresizingFlexibleRightMargin;
+            autoResizingMask |= UIViewAutoresizingFlexibleLeftMargin;
+            break;
+        case RIGHT:
+            xCoordinate = (viewWidth - width);
+            autoResizingMask |= UIViewAutoresizingFlexibleLeftMargin;
+            break;
+        default:
+            xCoordinate = (viewWidth - width) / 2;
+            autoResizingMask |= UIViewAutoresizingFlexibleRightMargin;
+            autoResizingMask |= UIViewAutoresizingFlexibleLeftMargin;
+            break;
+    }
+
+    // Clamp the view
+    int32_t left = xCoordinate + xOffset;
+    int32_t top = yCoordinate + yOffset;
+
+    adView = [[TapForTapAdView alloc] initWithFrame:CGRectMake(left, top, width, height)];
+    adView.autoresizingMask = autoResizingMask;
+    adView.delegate = [[TapForTapAirAdViewDelegate alloc] initWithContext: freContext];
     [applicationView addSubview: adView];
-    
+}
+
+DEFINE_ANE_FUNCTION(createAdView)
+{
+
+    int32_t verticalAlignment = 0;
+    int32_t horiztonalAligment = 0;
+
+    int32_t xOffset = 0;
+    int32_t yOffset = 0;
+    double scale =  0;
+
+    // Handle legacy case where boolean determined position of ad
+    FREObjectType *firstParam = nil;
+    FREGetObjectType(freObjects[0], firstParam);
+    if(*firstParam == FRE_TYPE_BOOLEAN) {
+        uint32_t displayAtTop = 0;
+        FREGetObjectAsBool(freObjects[0], &displayAtTop);
+        if(displayAtTop) {
+            verticalAlignment = TOP;
+        }
+        horiztonalAligment = CENTER;
+    } else {
+        FREGetObjectAsInt32(freObjects[0], &verticalAlignment);
+        FREGetObjectAsInt32(freObjects[1], &horiztonalAligment);
+        FREGetObjectAsInt32(freObjects[2], &xOffset);
+        FREGetObjectAsInt32(freObjects[3], &yOffset);
+        FREGetObjectAsDouble(freObjects[4], &scale);
+    }
+
+    // removeAdView(freContext, functionData, argc, freObjects);
+    showAd(freContext, horiztonalAligment, verticalAlignment, xOffset, yOffset, scale);
     FREObject result = nil;
     FRENewObjectFromBool(true, &result);
-    NSLog(@"Exiting createAddView()");
     return result;
 }
 
-FREObject removeAdView(FREContext context, void* funcData, uint32_t argc, FREObject argv[])
+DEFINE_ANE_FUNCTION(removeAdView)
 {
-    NSLog(@"Entering removeAdView()");
-    
     [adView removeFromSuperview];
+    [adView setDelegate: nil];
     [adView release];
     adView = nil;
-    
+
     FREObject result = nil;
     FRENewObjectFromBool(true, &result);
-    NSLog(@"Exiting removeAdView()");
     return result;
 }
 
-FREObject prepareInterstitial(FREContext context, void* funcData, uint32_t argc, FREObject argv[])
+DEFINE_ANE_FUNCTION(prepareInterstitial)
 {
-    NSLog(@"Entering prepareInterstitial()");
-    
+    setInterstitialDelegate(freContext);
     [TapForTapInterstitial prepare];
-    
+
     FREObject result = nil;
     FRENewObjectFromBool(true, &result);
-    NSLog(@"Exiting prepareInterstitial()");
     return result;}
 
-FREObject showInterstitial(FREContext context, void* funcData, uint32_t argc, FREObject argv[])
+DEFINE_ANE_FUNCTION(showInterstitial)
 {
-    NSLog(@"Entering showInterstitial()");
-    
+    setInterstitialDelegate(freContext);
     [TapForTapInterstitial showWithRootViewController:applicationViewController];
-    
+
     FREObject result = nil;
     FRENewObjectFromBool(true, &result);
-    NSLog(@"Exiting showInterstitial()");
     return result;
 }
 
-FREObject prepareAppWall(FREContext context, void* funcData, uint32_t argc, FREObject argv[])
+DEFINE_ANE_FUNCTION(prepareAppWall)
 {
-    NSLog(@"Entering prepareAppWall()");
-    
+    setAppWallDelegate(freContext);
     [TapForTapAppWall prepare];
-    
+
     FREObject result = nil;
     FRENewObjectFromBool(true, &result);
-    NSLog(@"Exiting prepareAppWall()");
     return result;
 }
 
-FREObject showAppWall(FREContext context, void* funcData, uint32_t argc, FREObject argv[])
+DEFINE_ANE_FUNCTION(showAppWall)
 {
-    NSLog(@"Entering showAppWall()");
-    
+    setAppWallDelegate(freContext);
     [TapForTapAppWall showWithRootViewController:applicationViewController];
-    
+
     FREObject result = nil;
     FRENewObjectFromBool(true, &result);
-    NSLog(@"Exiting showAppWall()");
     return result;
 }
 
-FREObject setYearOfBirth(FREContext context, void* funcData, uint32_t argc, FREObject argv[])
+DEFINE_ANE_FUNCTION(setYearOfBirth)
 {
-    NSLog(@"Entering setBirthYear()");
-    
     uint32_t ageUint32 = 0;
-    FREGetObjectAsUint32(argv[0], &ageUint32);
-        
+    FREGetObjectAsUint32(freObjects[0], &ageUint32);
+
     NSUInteger age = ageUint32;
     [TapForTap setYearOfBirth:age];
-    
+
     FREObject result = nil;
     FRENewObjectFromBool(true, &result);
-    NSLog(@"Exiting setBirthYear()");
     return result;
 }
 
-FREObject setGender(FREContext context, void* funcData, uint32_t argc, FREObject argv[])
+DEFINE_ANE_FUNCTION(setGender)
 {
-    NSLog(@"Entering setGender()");
-    
     uint32_t genderUint32;
-    FREGetObjectAsUint32(argv[0], &genderUint32);
+    FREGetObjectAsUint32(freObjects[0], &genderUint32);
     NSUInteger gender = genderUint32;
-    
-    
+
     if (gender == 0)
     {
         [TapForTap setGender:MALE];
@@ -172,169 +222,160 @@ FREObject setGender(FREContext context, void* funcData, uint32_t argc, FREObject
     {
         [TapForTap setGender:NONE];
     }
-    
+
     FREObject result = nil;
     FRENewObjectFromBool(true, &result);
-    NSLog(@"Exiting setGender()");
     return result;
 }
 
-FREObject setLocation(FREContext context, void* funcData, uint32_t argc, FREObject argv[])
+DEFINE_ANE_FUNCTION(setLocation)
 {
-    NSLog(@"Entering setLocation()");
     double_t latitudeDouble;
     double_t longitudeDouble;
-    
-    FREGetObjectAsDouble(argv[0], &latitudeDouble);
-    FREGetObjectAsDouble(argv[1], &longitudeDouble);
-    
+
+    FREGetObjectAsDouble(freObjects[0], &latitudeDouble);
+    FREGetObjectAsDouble(freObjects[1], &longitudeDouble);
+
     CLLocationDegrees latitude = latitudeDouble;
     CLLocationDegrees longitude = longitudeDouble;
-    
+
     CLLocation *location = [[CLLocation alloc] initWithLatitude:latitude longitude:longitude];
-    
+
     [TapForTap setLocation:location];
-    
+
     [location release];
-    
+
     FREObject result = nil;
     FRENewObjectFromBool(true, &result);
-    NSLog(@"Exiting setLocation()");
     return result;
 }
 
-FREObject setUserAccountId(FREContext ctx, void* funcData, uint32_t argc, FREObject argv[])
+DEFINE_ANE_FUNCTION(setUserAccountId)
 {
-    NSLog(@"Entering setUserAccountId()");
     const uint8_t* userAccountIdArray = NULL;
     uint32_t length = 0;
-    FREGetObjectAsUTF8(argv[0], &length, &userAccountIdArray);
-    NSString* userAcountId = [NSString stringWithUTF8String:userAccountIdArray];
-    
+    FREGetObjectAsUTF8(freObjects[0], &length, &userAccountIdArray);
+    NSString* userAcountId = [NSString stringWithUTF8String:(const char*)userAccountIdArray];
+
     [TapForTap setUserAccountID:userAcountId];
-    
+
     FREObject result = nil;
     FRENewObjectFromBool(true, &result);
-    NSLog(@"Exiting setUserAccountId()");
     return result;
 }
 
-FREObject setMode(FREContext ctx, void* funcData, uint32_t argc, FREObject argv[])
+DEFINE_ANE_FUNCTION(setMode)
 {
     const uint8_t* modeArray = NULL;
     uint32_t length = 0;
-    FREGetObjectAsUTF8(argv[0], &length, &modeArray);
-    NSString* mode = [NSString stringWithUTF8String:modeArray];
-    
+    FREGetObjectAsUTF8(freObjects[0], &length, &modeArray);
+    NSString* mode = [NSString stringWithUTF8String:(const char*)modeArray];
+
     if ([mode isEqualToString:@"development"])
     {
         [TapForTap performSelector: @selector(_setEnvironment:) withObject: @"development"];
     }
-    
+
     FREObject result = nil;
     FRENewObjectFromBool(true, &result);
-    NSLog(@"Exiting setUserAccountId()");
     return result;
 }
 
-void TapForTapExtensionContextInitializer(void* extData, const uint8_t* ctxType, FREContext ctx, uint32_t* numFunctionsToTest, const FRENamedFunction** functionsToSet)
+DEFINE_ANE_FUNCTION(interstitialIsReady)
 {
-    NSLog(@"Entering TapForTapExtensionContextInitializer()");
-    
-    *numFunctionsToTest = 12;
-    
-    FRENamedFunction* func = (FRENamedFunction*) malloc(sizeof(FRENamedFunction) * *numFunctionsToTest);
-    
-    func[0].name = (const uint8_t*) "initializeWithApiKey";
-    func[0].functionData = NULL;
-    func[0].function = &initializeWithApiKey;
-    
-    func[1].name = (const uint8_t*) "createAdView";
-    func[1].functionData = NULL;
-    func[1].function = &createAdView;
-    
-    func[2].name = (const uint8_t*) "removeAdView";
-    func[2].functionData = NULL;
-    func[2].function = &removeAdView;
-    
-    func[3].name = (const uint8_t*) "prepareInterstitial";
-    func[3].functionData = NULL;
-    func[3].function = &prepareInterstitial;
-    
-    func[4].name = (const uint8_t*) "showInterstitial";
-    func[4].functionData = NULL;
-    func[4].function = &showInterstitial;
-    
-    func[5].name = (const uint8_t*) "prepareAppWall";
-    func[5].functionData = NULL;
-    func[5].function = &prepareAppWall;
-    
-    func[6].name = (const uint8_t*) "showAppWall";
-    func[6].functionData = NULL;
-    func[6].function = &showAppWall;
-    
-    func[7].name = (const uint8_t*) "setYearOfBirth";
-    func[7].functionData = NULL;
-    func[7].function = &setYearOfBirth;
-    
-    func[8].name = (const uint8_t*) "setGender";
-    func[8].functionData = NULL;
-    func[8].function = &setGender;
-    
-    func[9].name = (const uint8_t*) "setLocation";
-    func[9].functionData = NULL;
-    func[9].function = &setLocation;
-    
-    func[10].name = (const uint8_t*) "setUserAccountId";
-    func[10].functionData = NULL;
-    func[10].function = &setUserAccountId;
-    
-    func[11].name = (const uint8_t*) "setMode";
-    func[11].functionData = NULL;
-    func[11].function = &setMode;
-    
-    *functionsToSet = func;
-    NSLog(@"Exiting TapForTapExtensionContextInitializer()");
+    bool isReady = [TapForTapInterstitial isReady];
+    FREObject result = nil;
+    FRENewObjectFromBool(isReady, &result);
+    return result;
 }
 
-void TapForTapExtensionContextFinalizer(FREContext ctx) {
-    
-    NSLog(@"Entering TapForTapExtensionContextFinalizer()");
-    
-    // Nothing to clean up
-    
-    NSLog(@"Exiting TapForTapExtensionContextFinalizer()");
-    
+DEFINE_ANE_FUNCTION(appWallIsReady)
+{
+    bool isReady = [TapForTapAppWall isReady];
+    FREObject result = nil;
+    FRENewObjectFromBool(isReady, &result);
+    return result;
+}
+
+DEFINE_ANE_FUNCTION(getVersion)
+{
+    const char *version = [[TapForTap performSelector: @selector(_pluginVersion)] UTF8String];
+    FREObject result = nil;
+    uint32_t length = strlen(version);
+    FRENewObjectFromUTF8(length, (uint8_t*) version, &result);
+    return result;
+}
+
+void TapForTapExtensionContextInitializer(void* extData, const uint8_t* ctxType, FREContext ctx, uint32_t* numFunctionsToSet, const FRENamedFunction** functionsToSet)
+{
+    static FRENamedFunction functionMap[] = {
+        MAP_FUNCTION(initializeWithApiKey, NULL),
+        MAP_FUNCTION(setYearOfBirth, NULL),
+        MAP_FUNCTION(setGender, NULL),
+        MAP_FUNCTION(setLocation, NULL),
+        MAP_FUNCTION(setUserAccountId, NULL),
+        MAP_FUNCTION(getVersion, NULL),
+        MAP_FUNCTION(createAdView, NULL),
+        MAP_FUNCTION(removeAdView, NULL),
+        MAP_FUNCTION(prepareInterstitial, NULL),
+        MAP_FUNCTION(showInterstitial, NULL),
+        MAP_FUNCTION(interstitialIsReady, NULL),
+        MAP_FUNCTION(prepareAppWall, NULL),
+        MAP_FUNCTION(showAppWall, NULL),
+        MAP_FUNCTION(appWallIsReady, NULL),
+        MAP_FUNCTION(setMode, NULL)
+    };
+    *numFunctionsToSet = sizeof( functionMap ) / sizeof( FRENamedFunction );
+    *functionsToSet = functionMap;
+}
+
+void TapForTapExtensionContextFinalizer(FREContext ctx)
+{
 	return;
 }
 
 void TapForTapExtensionInitializer(void** extDataToSet, FREContextInitializer* ctxInitializerToSet, FREContextFinalizer* ctxFinalizerToSet)
 {
-    
-    NSLog(@"Entering TapForTapExtensionInitializer()");
-    
     *extDataToSet = NULL;
     *ctxInitializerToSet = &TapForTapExtensionContextInitializer;
     *ctxFinalizerToSet = &TapForTapExtensionContextFinalizer;
-    
+
     applicationView = [[[UIApplication sharedApplication] keyWindow] rootViewController].view;
     applicationViewController = [[[UIApplication sharedApplication] keyWindow] rootViewController];
-    
-    NSLog(@"Exiting TapForTapExtensionInitializer()");
+
+    [TapForTap performSelector: @selector(_setPlugin:) withObject: @"air"];
+    [TapForTap performSelector: @selector(_setPluginVersion:) withObject: @"1.1.0"];
 }
 
-void TapForTapExtensionFinalizer(void* extData) {
-    
-    NSLog(@"Entering TapForTapExtensionFinalizer()");
-    
-    // Nothing to clean up
+void TapForTapExtensionFinalizer(void* extData)
+{
+    adView.delegate = nil;
     [adView release];
     adView = nil;
+
+
+    [TapForTapInterstitial.delegate release];
+    [TapForTapAppWall.delegate release];
+    TapForTapInterstitial.delegate = nil;
+    TapForTapAppWall.delegate = nil;
+
     [applicationView release];
     applicationView = nil;
     [applicationViewController release];
     applicationViewController = nil;
-    
-    NSLog(@"Exiting TapForTapExtensionFinalizer()");
     return;
+}
+
+void setInterstitialDelegate(FREContext *freContext)
+{
+    TapForTapAirInterstitialDelegate *delegate = [[TapForTapAirInterstitialDelegate alloc]initWithContext: freContext];
+    [TapForTapInterstitial prepareWithDelegate:delegate];
+    [TapForTapInterstitial setDelegate:delegate];
+}
+
+void setAppWallDelegate(FREContext *freContext)
+{
+    TapForTapAirAppWallDelegate *delegate = [[TapForTapAirAppWallDelegate alloc]initWithContext: freContext];
+    [TapForTapAppWall prepareWithDelegate:delegate];
+    [TapForTapAppWall setDelegate:delegate];
 }

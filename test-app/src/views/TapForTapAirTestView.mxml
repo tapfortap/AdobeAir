@@ -1,43 +1,57 @@
- <!-- 
-Licensed under the MIT license
-http://htmlpreview.github.com/?https://github.com/tapfortap/Documentation/blob/master/License.html
-Copyright (c) 2013 Tap for Tap 
--->
-
 <?xml version="1.0" encoding="utf-8"?>
-<s:View xmlns:fx="http://ns.adobe.com/mxml/2009" 
+<s:View xmlns:fx="http://ns.adobe.com/mxml/2009"
 		xmlns:s="library://ns.adobe.com/flex/spark" title="HomeView">
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
-	
+
 	<fx:Script>
 		<![CDATA[
-			
+
 			import com.tapfortap.ane.TapForTap;
-			
+			import flash.text.*;
+
 			public function showBannerAd(): void {
 				var tft: TapForTap = TapForTap.instance;
-				tft.createAdView(false);
+				tft.addTapForTapEventListener(AdViewOnReceiveAdHandler);
+				tft.createAdView(TapForTap.BOTTOM, TapForTap.CENTER,10,10,0.75);
+				text.text = "createAdView";
 			}
-			
+
 			public function hideBannerAd(): void {
 				var tft: TapForTap = TapForTap.instance;
 				tft.removeAdView();
 			}
-			
+
 			public function showInterstitial(): void {
 				var tft: TapForTap = TapForTap.instance;
-				tft.showInterstitial(); 
+				tft.showInterstitial();
 			}
-			
+
 			public function showAppWall(): void {
 				var tft: TapForTap = TapForTap.instance;
-				tft.showAppWall(); 
+				tft.showAppWall();
 			}
+
+			private function AdViewOnReceiveAdHandler(event:StatusEvent):void {
+				var tft: TapForTap = TapForTap.instance;
+				text.text = tft.getVersion() + " " + String(event.code) + " " + String(event.level);
+				isReady.text = (tft.interstitialIsReady() ? "true" : false) + " " + (tft.appWallIsReady() ? "true" : false);
+			}
+
 		]]>
 	</fx:Script>
-	
+
+	<s:VGroup width="100%" height="100%" y="0" horizontalAlign="center">
+		<s:Label id = "text" x="0" y="0" height="75" width="100%">
+                <s:text>This is a Label control.</s:text>
+            </s:Label>
+    </s:VGroup>
+	<s:VGroup width="100%" height="100%" y="100" horizontalAlign="center">
+		<s:Label id = "isReady" x="0" y="0" height="75" width="100%">
+                <s:text>This is a Label control.</s:text>
+            </s:Label>
+    </s:VGroup>
 	<s:VGroup width="100%" height="100%" y="100" horizontalAlign="center">
 		<s:Button label="Show Banner Ad" click="showBannerAd()" styleName="next"/>
 	</s:VGroup>
@@ -50,5 +64,5 @@ Copyright (c) 2013 Tap for Tap
 	<s:VGroup width="100%" height="100%" y="400" horizontalAlign="center">
 		<s:Button label="Show App Wall" click="showAppWall()" styleName="next"/>
 	</s:VGroup>
-	
+
 </s:View>
