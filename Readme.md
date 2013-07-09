@@ -24,6 +24,20 @@ Set the following environment variables:
 
 run `release.sh`
 
+1.1.0 / 2013-03-05
+==================
+### Android
+- AdobeAir is now on par with native SDK
+- Update TapForTap.jar to 2.3.0
+- Add events for all ad units
+- AdView can now be positioned more finely
+
+### iOS
+- AdobeAir is now on par with native SDK
+- Update libTapForTap.a to 2.3.2
+- Add events for all ad units
+- AdView can now be positioned more finely
+
 1.0.0 / 2013-03-05
 ==================
 ### Android
