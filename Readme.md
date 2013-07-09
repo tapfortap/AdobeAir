@@ -24,7 +24,7 @@ Set the following environment variables:
 
 run `release.sh`
 
-1.1.0 / 2013-03-05
+1.1.0 / 2013-07-09
 ==================
 ### Android
 - AdobeAir is now on par with native SDK
