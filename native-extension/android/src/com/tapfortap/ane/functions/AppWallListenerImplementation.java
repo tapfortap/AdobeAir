@@ -21,25 +21,21 @@ public class AppWallListenerImplementation implements AppWallListener {
 
     @Override
     public void onReceiveAd() {
-        Log.e("TEST", "onReceiveAd");
         freContext.dispatchStatusEventAsync("AppWallOnReceiveAd", "");
     }
 
     @Override
     public void onShow() {
-        Log.e("TEST", "onShow");
         freContext.dispatchStatusEventAsync("AppWallOnShow", "");
     }
 
     @Override
     public void onDismiss() {
-        Log.e("TEST", "onDismiss");
         freContext.dispatchStatusEventAsync("AppWallOnDismiss", "");
     }
 
     @Override
     public void onFail(String reason) {
-        Log.e("TEST", "onFail");
         freContext.dispatchStatusEventAsync("AppWallOnFailToReceiveAd", reason);
     }
 }

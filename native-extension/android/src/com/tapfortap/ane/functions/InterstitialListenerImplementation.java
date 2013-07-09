@@ -21,25 +21,21 @@ public class InterstitialListenerImplementation implements InterstitialListener 
 
     @Override
     public void onReceiveAd() {
-        Log.e("TEST", "onReceiveAd");
         freContext.dispatchStatusEventAsync("InterstitialOnReceiveAd", "");
     }
 
     @Override
     public void onShow() {
-        Log.e("TEST", "onShow");
         freContext.dispatchStatusEventAsync("InterstitialOnShow", "");
     }
 
     @Override
     public void onDismiss() {
-        Log.e("TEST", "onDismiss");
         freContext.dispatchStatusEventAsync("InterstitialOnDismiss", "");
     }
 
     @Override
     public void onFail(String reason) {
-        Log.e("TEST", "onFail");
         freContext.dispatchStatusEventAsync("InterstitialOnFailToReceiveAd", reason);
     }
 }

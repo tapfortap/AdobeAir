@@ -101,19 +101,12 @@ public class CreateAddViewFunction implements FREFunction{
             }
         }
 
-        Log.e("TEST", "" + horizontalAlignemnt);
-        Log.e("TEST", "" + verticalAlignment);
-        Log.e("TEST", "" + xOffset);
-        Log.e("TEST", "" + yOffset);
-        Log.e("TEST", "" + scale);
-
         FrameLayout.LayoutParams viewLayoutParams = new FrameLayout.LayoutParams(width, height, gravity);
         int leftMargin = (int)(xOffset * metrics.density);
         int topMargin = (int)(yOffset * metrics.density);
         viewLayoutParams.setMargins(leftMargin, topMargin, 0, 0);
 
         AdView adView = new AdView(activity);
-        Log.e("TEST", "creating an adView");
         adView.setListener(new AdViewListenerImplementation(freContext));
         adView.setLayoutParams(viewLayoutParams);
         extContext.layout.addView(adView);
@@ -129,25 +122,21 @@ public class CreateAddViewFunction implements FREFunction{
     private class AdViewListenerImplementation implements com.tapfortap.AdView.AdViewListener {
         private FREContext freContext;
         AdViewListenerImplementation(FREContext freContext) {
-            Log.e("TEST", "creating an AdViewListenerImplementation");
             this.freContext = freContext;
         }
 
         @Override
         public void onReceiveAd() {
-            Log.e("TEST", "onReceiveAd");
             freContext.dispatchStatusEventAsync("AdViewOnReceiveAd", "");
         }
 
         @Override
         public void onFailToReceiveAd(String reason) {
-            Log.e("TEST", "onFailToReceiveAd");
             freContext.dispatchStatusEventAsync("AdViewOnFailToReceiveAd", reason);
         }
 
         @Override
         public void onTapAd() {
-            Log.e("TEST", "onTapAd");
             freContext.dispatchStatusEventAsync("AdViewOnTapAd", "");
         }
     }
