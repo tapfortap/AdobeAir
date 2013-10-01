@@ -22,7 +22,9 @@ public class SetModeFunction implements FREFunction {
 			String mode;
 			mode = freObjects[0].getAsString();
 			if (mode.equals("development")) {
-				TapForTap.environment = "development";
+				TapForTap.setEnvironment("development");
+			} else if (mode.equals("production")) {
+				TapForTap.setEnvironment("production");
 			}
 		} catch (IllegalStateException e) {
 			e.printStackTrace();

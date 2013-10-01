@@ -19,8 +19,8 @@ import com.adobe.fre.FREObject;
 import com.adobe.fre.FRETypeMismatchException;
 import com.adobe.fre.FREWrongThreadException;
 
-import com.tapfortap.AdView;
-import com.tapfortap.AdView.AdViewListener;
+import com.tapfortap.Banner;
+import com.tapfortap.Banner.BannerListener;
 
 import com.tapfortap.ane.TapForTapExtensionContext;
 
@@ -51,10 +51,14 @@ public class CreateAddViewFunction implements FREFunction{
 
     	// Setup the adView
         DisplayMetrics metrics = activity.getResources().getDisplayMetrics();
-        int width = (int)(320 * metrics.density * scale);
-        int height = (int) (50 * metrics.density * scale);
+        int width = 320;
+        int height = 50;
+        if (extContext.autoScale) {
+            width = (int)(320 * metrics.density);
+            height = (int) (50 * metrics.density);
+        }
 
-        // Support for when a boolean determined if it was yop or bottom
+        // Support for when a boolean determined if it was top or bottom
         Boolean atTop = displayAtTop(freObjects);
         if(atTop != null) {
             if(atTop) {
@@ -70,6 +74,8 @@ public class CreateAddViewFunction implements FREFunction{
             xOffset = getXOffset(freObjects);
             yOffset = getYOffset(freObjects);
             scale = getScale(freObjects);
+            width *= scale;
+            height *= scale;
             switch(horizontalAlignemnt) {
                 case 1:
                     gravity |= Gravity.LEFT;
@@ -102,15 +108,14 @@ public class CreateAddViewFunction implements FREFunction{
         }
 
         FrameLayout.LayoutParams viewLayoutParams = new FrameLayout.LayoutParams(width, height, gravity);
-        int leftMargin = (int)(xOffset * metrics.density);
-        int topMargin = (int)(yOffset * metrics.density);
+        int leftMargin = extContext.autoScale ? (int)(xOffset * metrics.density) : xOffset;
+        int topMargin = extContext.autoScale ? (int)(yOffset * metrics.density) : yOffset;
         viewLayoutParams.setMargins(leftMargin, topMargin, 0, 0);
 
-        AdView adView = new AdView(activity);
-        adView.setListener(new AdViewListenerImplementation(freContext));
-        adView.setLayoutParams(viewLayoutParams);
-        extContext.layout.addView(adView);
-        extContext.adView = adView;
+        Banner banner = Banner.create(activity, new BannerListenerImplementation(freContext));
+        banner.setLayoutParams(viewLayoutParams);
+        extContext.layout.addView(banner);
+        extContext.banner = banner;
 
         try {
             return FREObject.newObject(true);
@@ -119,24 +124,24 @@ public class CreateAddViewFunction implements FREFunction{
         }
     }
 
-    private class AdViewListenerImplementation implements com.tapfortap.AdView.AdViewListener {
+    private class BannerListenerImplementation implements com.tapfortap.Banner.BannerListener {
         private FREContext freContext;
-        AdViewListenerImplementation(FREContext freContext) {
+        BannerListenerImplementation(FREContext freContext) {
             this.freContext = freContext;
         }
 
         @Override
-        public void onReceiveAd() {
+        public void bannerOnReceive(Banner banner) {
             freContext.dispatchStatusEventAsync("AdViewOnReceiveAd", "");
         }
 
         @Override
-        public void onFailToReceiveAd(String reason) {
+        public void bannerOnFail(Banner banner, String reason, Throwable throwable) {
             freContext.dispatchStatusEventAsync("AdViewOnFailToReceiveAd", reason);
         }
 
         @Override
-        public void onTapAd() {
+        public void bannerOnTap(Banner banner) {
             freContext.dispatchStatusEventAsync("AdViewOnTapAd", "");
         }
     }

@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4A1B95D1165B126F0088F0DB /* libTapForTapAds.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A1B95D0165B126F0088F0DB /* libTapForTapAds.a */; };
 		4A5DBB21177510E800E2236C /* TapForTapAirEventHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A5DBB20177510E800E2236C /* TapForTapAirEventHelper.m */; };
+		4A73030217FB4B3B00FCD09F /* libTapForTap.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A7302FD17FB4B3B00FCD09F /* libTapForTap.a */; };
 		4AB3FAE01655DE7500583A02 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AB3FADF1655DE7500583A02 /* Foundation.framework */; };
 		4ADB233F16E138F2001068AF /* TapForTapAir.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ADB233D16E138F2001068AF /* TapForTapAir.m */; };
 /* End PBXBuildFile section */
@@ -26,19 +26,19 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		4A1B95D0165B126F0088F0DB /* libTapForTapAds.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTapForTapAds.a; sourceTree = "<group>"; };
 		4A5DBB1F177510E800E2236C /* TapForTapAirEventHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TapForTapAirEventHelper.h; sourceTree = "<group>"; };
 		4A5DBB20177510E800E2236C /* TapForTapAirEventHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TapForTapAirEventHelper.m; sourceTree = "<group>"; };
+		4A7302FD17FB4B3B00FCD09F /* libTapForTap.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTapForTap.a; sourceTree = "<group>"; };
+		4A7302FE17FB4B3B00FCD09F /* TFTAppWall.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFTAppWall.h; sourceTree = "<group>"; };
+		4A7302FF17FB4B3B00FCD09F /* TFTBanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFTBanner.h; sourceTree = "<group>"; };
+		4A73030017FB4B3B00FCD09F /* TFTInterstitial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFTInterstitial.h; sourceTree = "<group>"; };
+		4A73030117FB4B3B00FCD09F /* TFTTapForTap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFTTapForTap.h; sourceTree = "<group>"; };
 		4AAFB3E916E58805009D8737 /* FlashRuntimeExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FlashRuntimeExtensions.h; path = "../../../../../../../Shared/flex-sdk-4.6-macosx/include/FlashRuntimeExtensions.h"; sourceTree = "<group>"; };
 		4AB3FADC1655DE7500583A02 /* libTapForTapAir.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libTapForTapAir.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		4AB3FADF1655DE7500583A02 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		4AB3FAE31655DE7500583A02 /* TapForTapAir-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TapForTapAir-Prefix.pch"; sourceTree = "<group>"; };
 		4AB3FAEE1655DE7600583A02 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		4AB3FAF01655DE7600583A02 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
-		4AB3FB1E1655F1AF00583A02 /* TapForTap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TapForTap.h; sourceTree = "<group>"; };
-		4AB3FB1F1655F1AF00583A02 /* TapForTapAdView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TapForTapAdView.h; sourceTree = "<group>"; };
-		4AB3FB201655F1AF00583A02 /* TapForTapAppWall.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TapForTapAppWall.h; sourceTree = "<group>"; };
-		4AB3FB211655F1AF00583A02 /* TapForTapInterstitial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TapForTapInterstitial.h; sourceTree = "<group>"; };
 		4ADB233C16E138DA001068AF /* TapForTapAir.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TapForTapAir.h; sourceTree = "<group>"; };
 		4ADB233D16E138F2001068AF /* TapForTapAir.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TapForTapAir.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -49,17 +49,29 @@
 			buildActionMask = 2147483647;
 			files = (
 				4AB3FAE01655DE7500583A02 /* Foundation.framework in Frameworks */,
-				4A1B95D1165B126F0088F0DB /* libTapForTapAds.a in Frameworks */,
+				4A73030217FB4B3B00FCD09F /* libTapForTap.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4A7302FC17FB4B3B00FCD09F /* TapForTap */ = {
+			isa = PBXGroup;
+			children = (
+				4A7302FD17FB4B3B00FCD09F /* libTapForTap.a */,
+				4A7302FE17FB4B3B00FCD09F /* TFTAppWall.h */,
+				4A7302FF17FB4B3B00FCD09F /* TFTBanner.h */,
+				4A73030017FB4B3B00FCD09F /* TFTInterstitial.h */,
+				4A73030117FB4B3B00FCD09F /* TFTTapForTap.h */,
+			);
+			path = TapForTap;
+			sourceTree = "<group>";
+		};
 		4AB3FAD11655DE7500583A02 = {
 			isa = PBXGroup;
 			children = (
-				4AB3FB1C1655F1AF00583A02 /* TapForTap */,
+				4A7302FC17FB4B3B00FCD09F /* TapForTap */,
 				4AB3FAE11655DE7500583A02 /* TapForTapAir */,
 				4AB3FADE1655DE7500583A02 /* Frameworks */,
 				4AB3FADD1655DE7500583A02 /* Products */,
@@ -105,18 +117,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		4AB3FB1C1655F1AF00583A02 /* TapForTap */ = {
-			isa = PBXGroup;
-			children = (
-				4A1B95D0165B126F0088F0DB /* libTapForTapAds.a */,
-				4AB3FB1E1655F1AF00583A02 /* TapForTap.h */,
-				4AB3FB1F1655F1AF00583A02 /* TapForTapAdView.h */,
-				4AB3FB201655F1AF00583A02 /* TapForTapAppWall.h */,
-				4AB3FB211655F1AF00583A02 /* TapForTapInterstitial.h */,
-			);
-			path = TapForTap;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -126,7 +126,6 @@
 			buildPhases = (
 				4AB3FAD81655DE7500583A02 /* Sources */,
 				4AB3FAD91655DE7500583A02 /* Frameworks */,
-				4A1B95CE165AE04C0088F0DB /* ShellScript */,
 				4AB3FADA1655DE7500583A02 /* CopyFiles */,
 			);
 			buildRules = (
@@ -163,22 +162,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		4A1B95CE165AE04C0088F0DB /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Based on: original script from Eonil (main changes: Eonil's script WILL NOT WORK in Xcode GUI - it WILL CRASH YOUR COMPUTER)\n#\n# More info: see this Stack Overflow question: http://stackoverflow.com/questions/3520977/build-fat-static-library-device-simulator-using-xcode-and-sdk-4\n\n#################[ Tests: helps workaround any future bugs in Xcode ]########\n#\nDEBUG_THIS_SCRIPT=\"false\"\n\nif [ $DEBUG_THIS_SCRIPT = \"true\" ]\nthen\necho \"########### TESTS #############\"\necho \"Use the following variables when debugging this script; note that they may change on recursions\"\necho \"BUILD_DIR = $BUILD_DIR\"\necho \"BUILD_ROOT = $BUILD_ROOT\"\necho \"CONFIGURATION_BUILD_DIR = $CONFIGURATION_BUILD_DIR\"\necho \"BUILT_PRODUCTS_DIR = $BUILT_PRODUCTS_DIR\"\necho \"CONFIGURATION_TEMP_DIR = $CONFIGURATION_TEMP_DIR\"\necho \"TARGET_BUILD_DIR = $TARGET_BUILD_DIR\"\nfi\n\n#####################[ part 1 ]##################\n# First, work out the BASESDK version number (NB: Apple ought to report this, but they hide it)\n#    (incidental: searching for substrings in sh is a nightmare! Sob)\n\nSDK_VERSION=$(echo ${SDK_NAME} | grep -o '.\\{3\\}$')\n\n# Next, work out if we're in SIM or DEVICE\n\nif [ ${PLATFORM_NAME} = \"iphonesimulator\" ]\nthen\nOTHER_SDK_TO_BUILD=iphoneos${SDK_VERSION}\nelse\nOTHER_SDK_TO_BUILD=iphonesimulator${SDK_VERSION}\nfi\n\necho \"XCode has selected SDK: ${PLATFORM_NAME} with version: ${SDK_VERSION} (although back-targetting: ${IPHONEOS_DEPLOYMENT_TARGET})\"\necho \"...therefore, OTHER_SDK_TO_BUILD = ${OTHER_SDK_TO_BUILD}\"\n#\n#####################[ end of part 1 ]##################\n\n#####################[ part 2 ]##################\n#\n# IF this is the original invocation, invoke WHATEVER other builds are required\n#\n# Xcode is already building ONE target...\n#\n# ...but this is a LIBRARY, so Apple is wrong to set it to build just one.\n# ...we need to build ALL targets\n# ...we MUST NOT re-build the target that is ALREADY being built: Xcode WILL CRASH YOUR COMPUTER if you try this (infinite recursion!)\n#\n#\n# So: build ONLY the missing platforms/configurations.\n\nif [ \"true\" == ${ALREADYINVOKED:-false} ]\nthen\necho \"RECURSION: I am NOT the root invocation, so I'm NOT going to recurse\"\nelse\n# CRITICAL:\n# Prevent infinite recursion (Xcode sucks)\nexport ALREADYINVOKED=\"true\"\n\necho \"RECURSION: I am the root ... recursing all missing build targets NOW...\"\necho \"RECURSION: ...about to invoke: xcodebuild -configuration \\\"${CONFIGURATION}\\\" -target \\\"${TARGET_NAME}\\\" -sdk \\\"${OTHER_SDK_TO_BUILD}\\\" ${ACTION} RUN_CLANG_STATIC_ANALYZER=NO\"\nxcodebuild -configuration \"${CONFIGURATION}\" -target \"${TARGET_NAME}\" -sdk \"${OTHER_SDK_TO_BUILD}\" ${ACTION} RUN_CLANG_STATIC_ANALYZER=NO BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\"\n\nACTION=\"build\"\n\n#Merge all platform binaries as a fat binary for each configurations.\n\n# Calculate where the (multiple) built files are coming from:\nCURRENTCONFIG_DEVICE_DIR=${SYMROOT}/${CONFIGURATION}-iphoneos\nCURRENTCONFIG_SIMULATOR_DIR=${SYMROOT}/${CONFIGURATION}-iphonesimulator\n\necho \"Taking device build from: ${CURRENTCONFIG_DEVICE_DIR}\"\necho \"Taking simulator build from: ${CURRENTCONFIG_SIMULATOR_DIR}\"\n\nCREATING_UNIVERSAL_DIR=${SYMROOT}/${CONFIGURATION}-universal\necho \"...I will output a universal build to: ${CREATING_UNIVERSAL_DIR}\"\n\n# ... remove the products of previous runs of this script\n#      NB: this directory is ONLY created by this script - it should be safe to delete!\n\nrm -rf \"${CREATING_UNIVERSAL_DIR}\"\nmkdir \"${CREATING_UNIVERSAL_DIR}\"\n\n#\necho \"lipo: for current configuration (${CONFIGURATION}) creating output file: ${CREATING_UNIVERSAL_DIR}/${EXECUTABLE_NAME}\"\nlipo -create -output \"${CREATING_UNIVERSAL_DIR}/${EXECUTABLE_NAME}\" \"${CURRENTCONFIG_DEVICE_DIR}/${EXECUTABLE_NAME}\" \"${CURRENTCONFIG_SIMULATOR_DIR}/${EXECUTABLE_NAME}\"\n\n# Copy the library to the package output directory\nmkdir -p \"${PROJECT_DIR}/package/TapForTapAir/\"\ncp \"${CREATING_UNIVERSAL_DIR}/${EXECUTABLE_NAME}\" \"${PROJECT_DIR}/package/TapForTapAir/${EXECUTABLE_NAME}\"\n\nfi\n";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		4AB3FAD81655DE7500583A02 /* Sources */ = {
@@ -248,7 +231,8 @@
 				INFOPLIST_EXPAND_BUILD_SETTINGS = NO;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/TapForTap\"",
+					"\\\"$(SRCROOT)/TapForTap\\\"",
+					"/Users/phil/Dropbox/tapfortap-phil/AdobeAir/native-extension/ios/TapForTap",
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -270,7 +254,8 @@
 				INFOPLIST_EXPAND_BUILD_SETTINGS = NO;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/TapForTap\"",
+					"\\\"$(SRCROOT)/TapForTap\\\"",
+					"/Users/phil/Dropbox/tapfortap-phil/AdobeAir/native-extension/ios/TapForTap",
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",

@@ -4,23 +4,23 @@
  * Copyright (c) 2013 Tap for Tap
  */
 
-#import "TapForTap.h"
+#import "TFTTapForTap.h"
 #import "FlashRuntimeExtensions.h"
 
-@interface TapForTapAirAdViewDelegate : NSObject<TapForTapAdViewDelegate> {
+@interface TFTAirBannerDelegate : NSObject<TFTBannerDelegate> {
     FREContext* _freContext;
 }
  - (id) initWithContext:(FREContext*)freContext;
 @end
 
 
-@interface TapForTapAirAppWallDelegate : NSObject<TapForTapAppWallDelegate> {
+@interface TFTAirAppWallDelegate : NSObject<TFTAppWallDelegate> {
     FREContext* _freContext;
 }
 - (id) initWithContext:(FREContext*)freContext;
 @end
 
-@interface TapForTapAirInterstitialDelegate : NSObject<TapForTapInterstitialDelegate> {
+@interface TFTAirInterstitialDelegate : NSObject<TFTInterstitialDelegate> {
     FREContext* _freContext;
 }
 - (id) initWithContext:(FREContext*)freContext;

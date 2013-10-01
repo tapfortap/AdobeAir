@@ -6,11 +6,11 @@
 
 #import "FlashRuntimeExtensions.h"
 
-#import "TapForTap.h"
+#import "TFTTapForTap.h"
 
 #import "TapForTapAirEventHelper.h"
 
-@implementation TapForTapAirAdViewDelegate
+@implementation TFTAirBannerDelegate
 
 - (id) initWithContext:(FREContext*)freContext
 {
@@ -21,21 +21,21 @@
     return self;
 }
 
-- (void) tapForTapAdViewDidReceiveAd: (TapForTapAdView *)adView
+- (void)tftBannerDidReceiveAd:(TFTBanner *)banner
 {
     const uint8_t* code = (const uint8_t*) [@"AdViewOnReceiveAd" UTF8String];
     const uint8_t* level = (const uint8_t*) [@"" UTF8String];
     FREDispatchStatusEventAsync(_freContext, code, level);
 }
 
-- (void) tapForTapAdView: (TapForTapAdView *)adView didFailToReceiveAd: (NSString *)reason
+- (void)tftBanner:(TFTBanner *)banner didFail:(NSString *)reason;
 {
     const uint8_t* code = (const uint8_t*) [@"AdViewOnFailToReceiveAd" UTF8String];
     const uint8_t* level = (const uint8_t*) [reason UTF8String];
     FREDispatchStatusEventAsync(_freContext, code, level);
 }
 
-- (void) tapForTapAdViewWasTapped: (TapForTapAdView *)adView
+- (void)tftBannerWasTapped:(TFTBanner *)banner;
 {
     const uint8_t* code = (const uint8_t*) [@"AdViewOnTapAd" UTF8String];
     const uint8_t* level = (const uint8_t*) [@"" UTF8String];
@@ -43,7 +43,7 @@
 }
 @end
 
-@implementation TapForTapAirAppWallDelegate
+@implementation TFTAirAppWallDelegate
 
 - (id) initWithContext:(FREContext*)freContext
 {
@@ -54,28 +54,35 @@
     return self;
 }
 
-- (void) tapForTapAppWallDidReceiveAd
+- (void)tftAppWallDidReceiveAd:(TFTAppWall *)appWall;
 {
     const uint8_t* code = (const uint8_t*) [@"AppWallOnReceiveAd" UTF8String];
     const uint8_t* level = (const uint8_t*) [@"" UTF8String];
     FREDispatchStatusEventAsync(_freContext, code, level);
 }
 
-- (void) tapForTapAppWallDidShow
+- (void)tftAppWallDidShow:(TFTAppWall *)appWall;
 {
     const uint8_t* code = (const uint8_t*) [@"AppWallOnShow" UTF8String];
     const uint8_t* level = (const uint8_t*) [@"" UTF8String];
     FREDispatchStatusEventAsync(_freContext, code, level);
 }
 
-- (void) tapForTapAppWallWasDismissed
+- (void)tftAppWallWasTapped:(TFTAppWall *)appWall
+{
+    const uint8_t* code = (const uint8_t*) [@"AppWallOnTap" UTF8String];
+    const uint8_t* level = (const uint8_t*) [@"" UTF8String];
+    FREDispatchStatusEventAsync(_freContext, code, level);
+}
+
+- (void)tftAppWallWasDismissed:(TFTAppWall *)appWall;
 {
     const uint8_t* code = (const uint8_t*) [@"AppWallOnDismiss" UTF8String];
     const uint8_t* level = (const uint8_t*) [@"" UTF8String];
     FREDispatchStatusEventAsync(_freContext, code, level);
 }
 
-- (void) tapForTapAppWallFailedToDownload: (NSString *) reason
+- (void)tftAppWall:(TFTAppWall *)appWall didFail:(NSString *)reason;
 {
     const uint8_t* code = (const uint8_t*) [@"AppWallOnFailToReceiveAd" UTF8String];
     const uint8_t* level = (const uint8_t*) [reason UTF8String];
@@ -83,7 +90,7 @@
 }
 @end
 
-@implementation TapForTapAirInterstitialDelegate
+@implementation TFTAirInterstitialDelegate
 
 - (id) initWithContext:(FREContext*)freContext
 {
@@ -94,28 +101,35 @@
     return self;
 }
 
-- (void) tapForTapInterstitialDidReceiveAd
+- (void)tftInterstitialDidReceiveAd:(TFTInterstitial *)interstitial;
 {
     const uint8_t* code = (const uint8_t*) [@"InterstitialOnReceiveAd" UTF8String];
     const uint8_t* level = (const uint8_t*) [@"" UTF8String];
     FREDispatchStatusEventAsync(_freContext, code, level);
 }
 
-- (void) tapForTapInterstitialDidShow
+- (void)tftInterstitialDidShow:(TFTInterstitial *)interstitial;
 {
     const uint8_t* code = (const uint8_t*) [@"InterstitialOnShow" UTF8String];
     const uint8_t* level = (const uint8_t*) [@"" UTF8String];
     FREDispatchStatusEventAsync(_freContext, code, level);
 }
 
-- (void) tapForTapInterstitialWasDismissed
+- (void)tftInterstitialWasTapped:(TFTInterstitial *)interstitial
+{
+    const uint8_t* code = (const uint8_t*) [@"InterstitialOnTap" UTF8String];
+    const uint8_t* level = (const uint8_t*) [@"" UTF8String];
+    FREDispatchStatusEventAsync(_freContext, code, level);
+}
+
+- (void)tftInterstitialWasDismissed:(TFTInterstitial *)interstitial;
 {
     const uint8_t* code = (const uint8_t*) [@"InterstitialOnDismiss" UTF8String];
     const uint8_t* level = (const uint8_t*) [@"" UTF8String];
     FREDispatchStatusEventAsync(_freContext, code, level);
 }
 
-- (void) tapForTapInterstitialFailedToDownload: (NSString *) reason
+- (void)tftInterstitial:(TFTInterstitial *)interstitial didFail:(NSString *)reason;
 {
     const uint8_t* code = (const uint8_t*) [@"InterstitialOnFailToReceiveAd" UTF8String];
     const uint8_t* level = (const uint8_t*) [reason UTF8String];

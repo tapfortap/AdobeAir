@@ -11,7 +11,7 @@ public class GetVersionFunction implements FREFunction {
      @Override
     public FREObject call(FREContext freContext, FREObject[] freObjects) {
         try {
-            return FREObject.newObject(TapForTap.pluginVersion);
+            return FREObject.newObject(TapForTap.PLUGIN_VERSION);
         } catch (FREWrongThreadException e) {
             e.printStackTrace();
         }

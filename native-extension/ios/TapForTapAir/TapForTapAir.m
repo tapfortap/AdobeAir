@@ -6,7 +6,7 @@
 
 #import "FlashRuntimeExtensions.h"
 
-#import "TapForTap.h"
+#import "TFTTapForTap.h"
 
 #import "TapForTapAir.h"
 #import "TapForTapAirEventHelper.h"
@@ -20,7 +20,9 @@
 #define LEFT 1
 #define RIGHT 3
 
-TapForTapAdView* adView = nil;
+TFTBanner *banner = nil;
+TFTInterstitial *interstitial = nil;
+TFTAppWall *appWall = nil;
 UIView* applicationView = nil;
 UIViewController* applicationViewController = nil;
 
@@ -35,7 +37,7 @@ DEFINE_ANE_FUNCTION(initializeWithApiKey)
     FREGetObjectAsUTF8(freObjects[0], &length, &apiKeyArray);
     NSString* apiKey = [NSString stringWithUTF8String:(const char *)apiKeyArray];
 
-    [TapForTap initializeWithAPIKey: apiKey];
+    [TFTTapForTap initializeWithAPIKey: apiKey];
 
     FREObject result = nil;
     FRENewObjectFromBool(true, &result);
@@ -101,10 +103,8 @@ void showAd(FREContext *freContext, int32_t horiztonalAligment, int32_t vertical
     int32_t left = xCoordinate + xOffset;
     int32_t top = yCoordinate + yOffset;
 
-    adView = [[TapForTapAdView alloc] initWithFrame:CGRectMake(left, top, width, height)];
-    adView.autoresizingMask = autoResizingMask;
-    adView.delegate = [[TapForTapAirAdViewDelegate alloc] initWithContext: freContext];
-    [applicationView addSubview: adView];
+    banner = [TFTBanner bannerWithFrame:CGRectMake(left, top, width, height) delegate:[[TFTAirBannerDelegate alloc] initWithContext: freContext]];
+    [applicationView addSubview: banner];
 }
 
 DEFINE_ANE_FUNCTION(createAdView)
@@ -144,20 +144,27 @@ DEFINE_ANE_FUNCTION(createAdView)
 
 DEFINE_ANE_FUNCTION(removeAdView)
 {
-    [adView removeFromSuperview];
-    [adView setDelegate: nil];
-    [adView release];
-    adView = nil;
+    [banner removeFromSuperview];
+    [banner setDelegate: nil];
+    [banner release];
+    banner = nil;
 
     FREObject result = nil;
     FRENewObjectFromBool(true, &result);
     return result;
 }
 
+TFTInterstitial * getInterstitial(FREContext *freContext) {
+    if (interstitial == nil) {
+        interstitial = [TFTInterstitial interstitialWithDelegate:[[TFTAirInterstitialDelegate alloc] initWithContext:freContext]];
+    }
+    return interstitial;
+}
+
 DEFINE_ANE_FUNCTION(prepareInterstitial)
 {
     setInterstitialDelegate(freContext);
-    [TapForTapInterstitial prepare];
+    [getInterstitial(freContext) load];
 
     FREObject result = nil;
     FRENewObjectFromBool(true, &result);
@@ -166,17 +173,24 @@ DEFINE_ANE_FUNCTION(prepareInterstitial)
 DEFINE_ANE_FUNCTION(showInterstitial)
 {
     setInterstitialDelegate(freContext);
-    [TapForTapInterstitial showWithRootViewController:applicationViewController];
+    [getInterstitial(freContext) showWithViewController:applicationViewController];
 
     FREObject result = nil;
     FRENewObjectFromBool(true, &result);
     return result;
 }
 
+TFTAppWall * getAppWall(FREContext *freContext) {
+    if (appWall == nil) {
+        appWall = [TFTAppWall appWallWithDelegate:[[TFTAirAppWallDelegate alloc] initWithContext:freContext]];
+    }
+    return appWall;
+}
+
 DEFINE_ANE_FUNCTION(prepareAppWall)
 {
     setAppWallDelegate(freContext);
-    [TapForTapAppWall prepare];
+    [getAppWall(freContext) load];
 
     FREObject result = nil;
     FRENewObjectFromBool(true, &result);
@@ -186,7 +200,7 @@ DEFINE_ANE_FUNCTION(prepareAppWall)
 DEFINE_ANE_FUNCTION(showAppWall)
 {
     setAppWallDelegate(freContext);
-    [TapForTapAppWall showWithRootViewController:applicationViewController];
+    [getAppWall(freContext) showWithViewController:applicationViewController];
 
     FREObject result = nil;
     FRENewObjectFromBool(true, &result);
@@ -199,7 +213,7 @@ DEFINE_ANE_FUNCTION(setYearOfBirth)
     FREGetObjectAsUint32(freObjects[0], &ageUint32);
 
     NSUInteger age = ageUint32;
-    [TapForTap setYearOfBirth:age];
+    [TFTTapForTap setYearOfBirth:age];
 
     FREObject result = nil;
     FRENewObjectFromBool(true, &result);
@@ -214,13 +228,13 @@ DEFINE_ANE_FUNCTION(setGender)
 
     if (gender == 0)
     {
-        [TapForTap setGender:MALE];
+        [TFTTapForTap setGender:MALE];
     } else if(gender == 1)
     {
-        [TapForTap setGender:FEMALE];
+        [TFTTapForTap setGender:FEMALE];
     } else
     {
-        [TapForTap setGender:NONE];
+        [TFTTapForTap setGender:NONE];
     }
 
     FREObject result = nil;
@@ -241,7 +255,7 @@ DEFINE_ANE_FUNCTION(setLocation)
 
     CLLocation *location = [[CLLocation alloc] initWithLatitude:latitude longitude:longitude];
 
-    [TapForTap setLocation:location];
+    [TFTTapForTap setLocation:location];
 
     [location release];
 
@@ -257,7 +271,7 @@ DEFINE_ANE_FUNCTION(setUserAccountId)
     FREGetObjectAsUTF8(freObjects[0], &length, &userAccountIdArray);
     NSString* userAcountId = [NSString stringWithUTF8String:(const char*)userAccountIdArray];
 
-    [TapForTap setUserAccountID:userAcountId];
+    [TFTTapForTap setUserAccountId:userAcountId];
 
     FREObject result = nil;
     FRENewObjectFromBool(true, &result);
@@ -273,7 +287,7 @@ DEFINE_ANE_FUNCTION(setMode)
 
     if ([mode isEqualToString:@"development"])
     {
-        [TapForTap performSelector: @selector(_setEnvironment:) withObject: @"development"];
+        [TFTTapForTap performSelector: @selector(_setEnvironment:) withObject: @"development"];
     }
 
     FREObject result = nil;
@@ -283,7 +297,10 @@ DEFINE_ANE_FUNCTION(setMode)
 
 DEFINE_ANE_FUNCTION(interstitialIsReady)
 {
-    bool isReady = [TapForTapInterstitial isReady];
+    BOOL isReady = false;
+    if (appWall != nil) {
+        isReady = appWall.readyToShow;
+    }
     FREObject result = nil;
     FRENewObjectFromBool(isReady, &result);
     return result;
@@ -291,7 +308,10 @@ DEFINE_ANE_FUNCTION(interstitialIsReady)
 
 DEFINE_ANE_FUNCTION(appWallIsReady)
 {
-    bool isReady = [TapForTapAppWall isReady];
+    BOOL isReady = false;
+    if (interstitial != nil) {
+        isReady = interstitial.readyToShow;
+    }
     FREObject result = nil;
     FRENewObjectFromBool(isReady, &result);
     return result;
@@ -299,11 +319,15 @@ DEFINE_ANE_FUNCTION(appWallIsReady)
 
 DEFINE_ANE_FUNCTION(getVersion)
 {
-    const char *version = [[TapForTap performSelector: @selector(_pluginVersion)] UTF8String];
+    const char *version = [[TFTTapForTap performSelector: @selector(pluginVersion)] UTF8String];
     FREObject result = nil;
     uint32_t length = strlen(version);
     FRENewObjectFromUTF8(length, (uint8_t*) version, &result);
     return result;
+}
+
+DEFINE_ANE_FUNCTION(setAutoScale) {
+    return nil;
 }
 
 void TapForTapExtensionContextInitializer(void* extData, const uint8_t* ctxType, FREContext ctx, uint32_t* numFunctionsToSet, const FRENamedFunction** functionsToSet)
@@ -323,7 +347,8 @@ void TapForTapExtensionContextInitializer(void* extData, const uint8_t* ctxType,
         MAP_FUNCTION(prepareAppWall, NULL),
         MAP_FUNCTION(showAppWall, NULL),
         MAP_FUNCTION(appWallIsReady, NULL),
-        MAP_FUNCTION(setMode, NULL)
+        MAP_FUNCTION(setMode, NULL),
+        MAP_FUNCTION(setAutoScale, NULL)
     };
     *numFunctionsToSet = sizeof( functionMap ) / sizeof( FRENamedFunction );
     *functionsToSet = functionMap;
@@ -343,39 +368,22 @@ void TapForTapExtensionInitializer(void** extDataToSet, FREContextInitializer* c
     applicationView = [[[UIApplication sharedApplication] keyWindow] rootViewController].view;
     applicationViewController = [[[UIApplication sharedApplication] keyWindow] rootViewController];
 
-    [TapForTap performSelector: @selector(_setPlugin:) withObject: @"air"];
-    [TapForTap performSelector: @selector(_setPluginVersion:) withObject: @"1.1.0"];
+    [TFTTapForTap performSelector: @selector(setPlugin:) withObject: @"air"];
+    [TapForTap performSelector: @selector(setPluginVersion:) withObject: @"1.2.0"];
 }
 
 void TapForTapExtensionFinalizer(void* extData)
 {
-    adView.delegate = nil;
-    [adView release];
-    adView = nil;
+    banner.delegate = nil;
+    [banner release];
+    banner = nil;
 
-
-    [TapForTapInterstitial.delegate release];
-    [TapForTapAppWall.delegate release];
-    TapForTapInterstitial.delegate = nil;
-    TapForTapAppWall.delegate = nil;
+    appWall = nil;
+    interstitial = nil;
 
     [applicationView release];
     applicationView = nil;
     [applicationViewController release];
     applicationViewController = nil;
     return;
-}
-
-void setInterstitialDelegate(FREContext *freContext)
-{
-    TapForTapAirInterstitialDelegate *delegate = [[TapForTapAirInterstitialDelegate alloc]initWithContext: freContext];
-    [TapForTapInterstitial prepareWithDelegate:delegate];
-    [TapForTapInterstitial setDelegate:delegate];
-}
-
-void setAppWallDelegate(FREContext *freContext)
-{
-    TapForTapAirAppWallDelegate *delegate = [[TapForTapAirAppWallDelegate alloc]initWithContext: freContext];
-    [TapForTapAppWall prepareWithDelegate:delegate];
-    [TapForTapAppWall setDelegate:delegate];
 }

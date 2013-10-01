@@ -22,13 +22,11 @@ public class InitializeWithApiKeyFunction implements FREFunction {
             return FREObject.newObject(true);
         } catch (FREWrongThreadException e) {
         	e.printStackTrace();
-            return null;
         } catch (FREInvalidObjectException e) {
         	e.printStackTrace();
-            return null;
         } catch (FRETypeMismatchException e) {
         	e.printStackTrace();
-            return null;
         }
+        return null;
     }
 }

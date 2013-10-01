@@ -15,7 +15,7 @@ import android.widget.FrameLayout;
 import com.adobe.fre.FREContext;
 import com.adobe.fre.FREFunction;
 
-import com.tapfortap.AdView;
+import com.tapfortap.Banner;
 import com.tapfortap.Interstitial;
 import com.tapfortap.AppWall;
 
@@ -27,6 +27,7 @@ import com.tapfortap.ane.functions.InitializeWithApiKeyFunction;
 import com.tapfortap.ane.functions.PrepareAppWallFunction;
 import com.tapfortap.ane.functions.PrepareInterstitialFunction;
 import com.tapfortap.ane.functions.RemoveAdViewFunction;
+import com.tapfortap.ane.functions.SetAutoScale;
 import com.tapfortap.ane.functions.SetGenderFunction;
 import com.tapfortap.ane.functions.SetLocationFunction;
 import com.tapfortap.ane.functions.SetModeFunction;
@@ -36,8 +37,11 @@ import com.tapfortap.ane.functions.ShowAppWallFunction;
 import com.tapfortap.ane.functions.ShowInterstitialFunction;
 
 public class TapForTapExtensionContext extends FREContext {
-	public AdView adView;
+	public Banner banner;
+    public Interstitial interstitial;
+    public AppWall appWall;
 	public FrameLayout layout;
+    public Boolean autoScale;
 
     @Override
     public Map<String, FREFunction> getFunctions() {
@@ -58,16 +62,17 @@ public class TapForTapExtensionContext extends FREContext {
         functions.put("showAppWall", new ShowAppWallFunction());
         functions.put("appWallIsReady", new AppWallIsReadyFunction());
         functions.put("setMode", new SetModeFunction());
+        functions.put("setAutoScale", new SetAutoScale());
 
         return functions;
     }
 
     @Override
     public void dispose() {
-        adView.setListener(null);
-        Interstitial.setListener(null);
-        AppWall.setListener(null);
-    	adView = null;
+        banner.setListener(null);
+    	banner = null;
+        interstitial = null;
+        appWall = null;
     	layout = null;
     }
 }

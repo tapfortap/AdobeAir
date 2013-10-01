@@ -16,18 +16,17 @@ public class RemoveAdViewFunction implements FREFunction {
 
 	@Override
 	public FREObject call(FREContext freContext, FREObject[] freObjects) {
-	
+
 		TapForTapExtensionContext extContext = (TapForTapExtensionContext)freContext;
-		if(extContext.adView != null) {
+		if(extContext.banner != null) {
 			extContext.layout.removeAllViews();
-			extContext.adView = null;
+			extContext.banner = null;
 		}
-		
+
 		try {
 			return FREObject.newObject(true);
 		} catch (FREWrongThreadException e) {
 			return null;
 		}
 	}
-
 }

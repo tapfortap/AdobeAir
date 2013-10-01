@@ -16,8 +16,8 @@ public class TapForTapExtension implements FREExtension {
     private static final String TAG = TapForTapExtension.class.getName();
     @Override
     public void initialize() {
-        TapForTap.plugin = "air";
-        TapForTap.pluginVersion = "1.1.0";
+        TapForTap.PLUGIN = "air";
+        TapForTap.PLUGIN_VERSION = "1.1.0";
     }
 
     @Override

@@ -9,7 +9,7 @@ IOS_FILE=native-extension/ios/TapForTapAir/TapForTapAir.m
 
 # Update the Plugin Version numbers in the native files
 sed -i '' "s/.*TapForTap.pluginVersion.*/            TapForTap.pluginVersion = \"$VERSION\";/" $ANDROID_FILE
-sed -i '' "s/.*TapForTap performSelector: @selector(_setPluginVersion:).*/    [TapForTap performSelector: @selector(_setPluginVersion:) withObject: @\"$VERSION\"];/" $IOS_FILE
+sed -i '' "s/.*TapForTap performSelector: @selector(setPluginVersion:).*/    [TapForTap performSelector: @selector(setPluginVersion:) withObject: @\"$VERSION\"];/" $IOS_FILE
 
 rm -rf release
 mkdir release

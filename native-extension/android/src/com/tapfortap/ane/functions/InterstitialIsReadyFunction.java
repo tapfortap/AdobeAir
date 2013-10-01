@@ -7,11 +7,14 @@ import com.adobe.fre.FREWrongThreadException;
 
 import com.tapfortap.Interstitial;
 
+import com.tapfortap.ane.TapForTapExtensionContext;
+
 public class InterstitialIsReadyFunction implements FREFunction {
      @Override
     public FREObject call(FREContext freContext, FREObject[] freObjects) {
         try {
-            return FREObject.newObject(Interstitial.isPrepared());
+        	TapForTapExtensionContext extContext = (TapForTapExtensionContext)freContext;
+            return FREObject.newObject(extContext.interstitial.isReadyToShow());
         } catch (FREWrongThreadException e) {
             e.printStackTrace();
         }

@@ -13,15 +13,21 @@ import com.adobe.fre.FREWrongThreadException;
 
 import com.tapfortap.AppWall;
 
+import com.tapfortap.ane.TapForTapExtensionContext;
 import com.tapfortap.ane.functions.AppWallListenerImplementation;
 
 public class PrepareAppWallFunction implements FREFunction {
 
 	@Override
 	public FREObject call(FREContext freContext, FREObject[] args) {
-		AppWallListenerImplementation listener = new AppWallListenerImplementation(freContext);
-		AppWall.prepare(freContext.getActivity(), listener);
-		AppWall.setListener(listener);
+		TapForTapExtensionContext extContext = (TapForTapExtensionContext)freContext;
+
+		if (extContext.appWall == null) {
+			extContext.appWall = AppWall.create(freContext.getActivity(), new AppWallListenerImplementation(freContext));
+		} else {
+			extContext.appWall.load();
+		}
+
 		try {
 			return FREObject.newObject(true);
 		} catch (FREWrongThreadException e) {

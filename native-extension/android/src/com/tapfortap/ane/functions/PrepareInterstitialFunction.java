@@ -12,15 +12,21 @@ import com.adobe.fre.FREObject;
 import com.adobe.fre.FREWrongThreadException;
 import com.tapfortap.Interstitial;
 
+import com.tapfortap.ane.TapForTapExtensionContext;
 import com.tapfortap.ane.functions.InterstitialListenerImplementation;
 
 public class PrepareInterstitialFunction implements FREFunction {
 
 	@Override
 	public FREObject call(FREContext freContext, FREObject[] freObjects) {
-		InterstitialListenerImplementation listener = new InterstitialListenerImplementation(freContext);
-		Interstitial.prepare(freContext.getActivity(), listener);
-		Interstitial.setListener(listener);
+		TapForTapExtensionContext extContext = (TapForTapExtensionContext)freContext;
+
+		if (extContext.interstitial == null) {
+			extContext.interstitial = Interstitial.create(freContext.getActivity(), new InterstitialListenerImplementation(freContext));
+		} else {
+			extContext.interstitial.load();
+		}
+
 		try {
 			return FREObject.newObject(true);
 		} catch (FREWrongThreadException e) {
@@ -28,5 +34,4 @@ public class PrepareInterstitialFunction implements FREFunction {
 			return null;
 		}
 	}
-
 }

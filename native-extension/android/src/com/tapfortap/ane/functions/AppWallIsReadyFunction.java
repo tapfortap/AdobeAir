@@ -7,11 +7,14 @@ import com.adobe.fre.FREWrongThreadException;
 
 import com.tapfortap.AppWall;
 
+import com.tapfortap.ane.TapForTapExtensionContext;
+
 public class AppWallIsReadyFunction implements FREFunction {
      @Override
     public FREObject call(FREContext freContext, FREObject[] freObjects) {
         try {
-            return FREObject.newObject(AppWall.isPrepared());
+        	TapForTapExtensionContext extContext = (TapForTapExtensionContext)freContext;
+            return FREObject.newObject(extContext.appWall.isReadyToShow());
         } catch (FREWrongThreadException e) {
             e.printStackTrace();
         }
