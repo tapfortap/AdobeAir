@@ -23,6 +23,6 @@ test-app/build/TapForTapAirTest.app.*
 
 test-app/build*
 repos*
-update_native_libraries
+update_native_libraries*
 
 

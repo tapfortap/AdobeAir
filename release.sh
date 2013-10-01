@@ -1,6 +1,7 @@
 #!/bin/sh
 
 VERSION="1.1.0"
+set -x
 
 cd "$(dirname $0)"
 
@@ -16,7 +17,7 @@ mkdir release
 
 if [ -f update_native_libraries ];
 then
-	./update_native_libraries
+	./update_native_libraries.sh
 fi
 
 native-extension/release.sh
