@@ -14,7 +14,7 @@
 			public function showBannerAd(): void {
 				var tft: TapForTap = TapForTap.instance;
 				tft.addTapForTapEventListener(AdViewOnReceiveAdHandler);
-				tft.createAdView(TapForTap.BOTTOM, TapForTap.CENTER,10,10,0.75);
+				tft.createAdView(TapForTap.BOTTOM, TapForTap.CENTER,10,10,1);
 				text.text = "createAdView";
 			}
 
