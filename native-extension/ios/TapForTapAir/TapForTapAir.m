@@ -26,8 +26,6 @@ TFTAppWall *appWall = nil;
 UIView* applicationView = nil;
 UIViewController* applicationViewController = nil;
 
-void setInterstitialDelegate(FREContext *freContext);
-void setAppWallDelegate(FREContext *freContext);
 void showAd(FREContext *freContext, int32_t horiztonalAligment, int32_t verticalAlignment, int32_t xOffset, int32_t yOffset, double scale);
 
 DEFINE_ANE_FUNCTION(initializeWithApiKey)
@@ -39,6 +37,53 @@ DEFINE_ANE_FUNCTION(initializeWithApiKey)
 
     [TFTTapForTap initializeWithAPIKey: apiKey];
 
+    FREObject result = nil;
+    FRENewObjectFromBool(true, &result);
+    return result;
+}
+
+DEFINE_ANE_FUNCTION(removeAdView)
+{
+    [banner removeFromSuperview];
+    [banner setDelegate: nil];
+    [banner release];
+    banner = nil;
+
+    FREObject result = nil;
+    FRENewObjectFromBool(true, &result);
+    return result;
+}
+
+DEFINE_ANE_FUNCTION(createAdView)
+{
+
+    int32_t verticalAlignment = 0;
+    int32_t horiztonalAligment = 0;
+
+    int32_t xOffset = 0;
+    int32_t yOffset = 0;
+    double scale =  0;
+
+    // Handle legacy case where boolean determined position of ad
+    FREObjectType *firstParam = nil;
+    FREGetObjectType(freObjects[0], firstParam);
+    if(*firstParam == FRE_TYPE_BOOLEAN) {
+        uint32_t displayAtTop = 0;
+        FREGetObjectAsBool(freObjects[0], &displayAtTop);
+        if(displayAtTop) {
+            verticalAlignment = TOP;
+        }
+        horiztonalAligment = CENTER;
+    } else {
+        FREGetObjectAsInt32(freObjects[0], &verticalAlignment);
+        FREGetObjectAsInt32(freObjects[1], &horiztonalAligment);
+        FREGetObjectAsInt32(freObjects[2], &xOffset);
+        FREGetObjectAsInt32(freObjects[3], &yOffset);
+        FREGetObjectAsDouble(freObjects[4], &scale);
+    }
+
+    removeAdView(freContext, functionData, argc, freObjects);
+    showAd(freContext, horiztonalAligment, verticalAlignment, xOffset, yOffset, scale);
     FREObject result = nil;
     FRENewObjectFromBool(true, &result);
     return result;
@@ -103,67 +148,19 @@ void showAd(FREContext *freContext, int32_t horiztonalAligment, int32_t vertical
     int32_t left = xCoordinate + xOffset;
     int32_t top = yCoordinate + yOffset;
 
-    banner = [TFTBanner bannerWithFrame:CGRectMake(left, top, width, height) delegate:[[TFTAirBannerDelegate alloc] initWithContext: freContext]];
+    banner = [[TFTBanner bannerWithFrame:CGRectMake(left, top, width, height) delegate:[[TFTAirBannerDelegate alloc] initWithContext: freContext]] retain];
     [applicationView addSubview: banner];
-}
-
-DEFINE_ANE_FUNCTION(createAdView)
-{
-
-    int32_t verticalAlignment = 0;
-    int32_t horiztonalAligment = 0;
-
-    int32_t xOffset = 0;
-    int32_t yOffset = 0;
-    double scale =  0;
-
-    // Handle legacy case where boolean determined position of ad
-    FREObjectType *firstParam = nil;
-    FREGetObjectType(freObjects[0], firstParam);
-    if(*firstParam == FRE_TYPE_BOOLEAN) {
-        uint32_t displayAtTop = 0;
-        FREGetObjectAsBool(freObjects[0], &displayAtTop);
-        if(displayAtTop) {
-            verticalAlignment = TOP;
-        }
-        horiztonalAligment = CENTER;
-    } else {
-        FREGetObjectAsInt32(freObjects[0], &verticalAlignment);
-        FREGetObjectAsInt32(freObjects[1], &horiztonalAligment);
-        FREGetObjectAsInt32(freObjects[2], &xOffset);
-        FREGetObjectAsInt32(freObjects[3], &yOffset);
-        FREGetObjectAsDouble(freObjects[4], &scale);
-    }
-
-    // removeAdView(freContext, functionData, argc, freObjects);
-    showAd(freContext, horiztonalAligment, verticalAlignment, xOffset, yOffset, scale);
-    FREObject result = nil;
-    FRENewObjectFromBool(true, &result);
-    return result;
-}
-
-DEFINE_ANE_FUNCTION(removeAdView)
-{
-    [banner removeFromSuperview];
-    [banner setDelegate: nil];
-    [banner release];
-    banner = nil;
-
-    FREObject result = nil;
-    FRENewObjectFromBool(true, &result);
-    return result;
 }
 
 TFTInterstitial * getInterstitial(FREContext *freContext) {
     if (interstitial == nil) {
-        interstitial = [TFTInterstitial interstitialWithDelegate:[[TFTAirInterstitialDelegate alloc] initWithContext:freContext]];
+        interstitial = [[TFTInterstitial interstitialWithDelegate:[[TFTAirInterstitialDelegate alloc] initWithContext:freContext]] retain];
     }
     return interstitial;
 }
 
 DEFINE_ANE_FUNCTION(prepareInterstitial)
 {
-    setInterstitialDelegate(freContext);
     [getInterstitial(freContext) load];
 
     FREObject result = nil;
@@ -172,7 +169,6 @@ DEFINE_ANE_FUNCTION(prepareInterstitial)
 
 DEFINE_ANE_FUNCTION(showInterstitial)
 {
-    setInterstitialDelegate(freContext);
     [getInterstitial(freContext) showWithViewController:applicationViewController];
 
     FREObject result = nil;
@@ -182,14 +178,13 @@ DEFINE_ANE_FUNCTION(showInterstitial)
 
 TFTAppWall * getAppWall(FREContext *freContext) {
     if (appWall == nil) {
-        appWall = [TFTAppWall appWallWithDelegate:[[TFTAirAppWallDelegate alloc] initWithContext:freContext]];
+        appWall = [[TFTAppWall appWallWithDelegate:[[TFTAirAppWallDelegate alloc] initWithContext:freContext]] retain];
     }
     return appWall;
 }
 
 DEFINE_ANE_FUNCTION(prepareAppWall)
 {
-    setAppWallDelegate(freContext);
     [getAppWall(freContext) load];
 
     FREObject result = nil;
@@ -199,7 +194,6 @@ DEFINE_ANE_FUNCTION(prepareAppWall)
 
 DEFINE_ANE_FUNCTION(showAppWall)
 {
-    setAppWallDelegate(freContext);
     [getAppWall(freContext) showWithViewController:applicationViewController];
 
     FREObject result = nil;
@@ -287,7 +281,7 @@ DEFINE_ANE_FUNCTION(setMode)
 
     if ([mode isEqualToString:@"development"])
     {
-        [TFTTapForTap performSelector: @selector(_setEnvironment:) withObject: @"development"];
+        [TFTTapForTap performSelector: @selector(setEnvironment:) withObject: @"development"];
     }
 
     FREObject result = nil;
@@ -369,7 +363,7 @@ void TapForTapExtensionInitializer(void** extDataToSet, FREContextInitializer* c
     applicationViewController = [[[UIApplication sharedApplication] keyWindow] rootViewController];
 
     [TFTTapForTap performSelector: @selector(setPlugin:) withObject: @"air"];
-    [TapForTap performSelector: @selector(setPluginVersion:) withObject: @"1.2.0"];
+    [TFTTapForTap performSelector: @selector(setPluginVersion:) withObject: @"1.2.0"];
 }
 
 void TapForTapExtensionFinalizer(void* extData)
@@ -378,7 +372,9 @@ void TapForTapExtensionFinalizer(void* extData)
     [banner release];
     banner = nil;
 
+    [appWall release];
     appWall = nil;
+    [interstitial release];
     interstitial = nil;
 
     [applicationView release];
