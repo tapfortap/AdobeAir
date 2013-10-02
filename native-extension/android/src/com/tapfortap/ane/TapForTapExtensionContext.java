@@ -20,7 +20,7 @@ import com.tapfortap.Interstitial;
 import com.tapfortap.AppWall;
 
 import com.tapfortap.ane.functions.AppWallIsReadyFunction;
-import com.tapfortap.ane.functions.CreateAddViewFunction;
+import com.tapfortap.ane.functions.CreateAdViewFunction;
 import com.tapfortap.ane.functions.GetVersionFunction;
 import com.tapfortap.ane.functions.InterstitialIsReadyFunction;
 import com.tapfortap.ane.functions.InitializeWithApiKeyFunction;
@@ -53,7 +53,7 @@ public class TapForTapExtensionContext extends FREContext {
         functions.put("setLocation", new SetLocationFunction());
         functions.put("setUserAccountId", new SetUserAccountIdFunction());
         functions.put("getVersion", new GetVersionFunction());
-        functions.put("createAdView", new CreateAddViewFunction());
+        functions.put("createAdView", new CreateAdViewFunction());
         functions.put("removeAdView", new RemoveAdViewFunction());
         functions.put("prepareInterstitial", new PrepareInterstitialFunction());
         functions.put("showInterstitial", new ShowInterstitialFunction());

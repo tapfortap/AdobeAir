@@ -26,7 +26,7 @@ import com.tapfortap.ane.TapForTapExtensionContext;
 
 import android.util.Log;
 
-public class CreateAddViewFunction implements FREFunction{
+public class CreateAdViewFunction implements FREFunction {
 
     @Override
     public FREObject call(FREContext freContext, FREObject[] freObjects) {
@@ -57,7 +57,6 @@ public class CreateAddViewFunction implements FREFunction{
             width = (int)(320 * metrics.density);
             height = (int) (50 * metrics.density);
         }
-
         // Support for when a boolean determined if it was top or bottom
         Boolean atTop = displayAtTop(freObjects);
         if(atTop != null) {
@@ -107,6 +106,7 @@ public class CreateAddViewFunction implements FREFunction{
             }
         }
 
+        Log.e("AIR TEST","Creating an ad.");
         FrameLayout.LayoutParams viewLayoutParams = new FrameLayout.LayoutParams(width, height, gravity);
         int leftMargin = extContext.autoScale ? (int)(xOffset * metrics.density) : xOffset;
         int topMargin = extContext.autoScale ? (int)(yOffset * metrics.density) : yOffset;
