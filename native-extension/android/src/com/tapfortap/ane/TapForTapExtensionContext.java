@@ -41,7 +41,7 @@ public class TapForTapExtensionContext extends FREContext {
     public Interstitial interstitial;
     public AppWall appWall;
 	public FrameLayout layout;
-    public Boolean autoScale;
+    public Boolean autoScale = true;
 
     @Override
     public Map<String, FREFunction> getFunctions() {
