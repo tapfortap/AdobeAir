@@ -25,7 +25,7 @@
                <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
                <application android:enabled="true">
-                  <activity android:name="com.tapfortap.TapForTapActivity"/>
+                  <activity android:name="com.tapfortap.FullScreenAdActivity"/>
                </application>
             </manifest>
          ]]>

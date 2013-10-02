@@ -1,16 +1,16 @@
 #!/bin/sh
 
-VERSION="1.1.0"
+VERSION="1.2.0"
 set -x
 
 cd "$(dirname $0)"
 
-ANDROID_FILE=native-extension/android/src/com/tapfortap/ane/functions/InitializeWithApiKeyFunction.java
+ANDROID_FILE=native-extension/android/src/com/tapfortap/ane/TapForTapExtension.java
 IOS_FILE=native-extension/ios/TapForTapAir/TapForTapAir.m
 
 # Update the Plugin Version numbers in the native files
-sed -i '' "s/.*TapForTap.pluginVersion.*/            TapForTap.pluginVersion = \"$VERSION\";/" $ANDROID_FILE
-sed -i '' "s/.*TapForTap performSelector: @selector(setPluginVersion:).*/    [TapForTap performSelector: @selector(setPluginVersion:) withObject: @\"$VERSION\"];/" $IOS_FILE
+sed -i '' "s/.*TapForTap.PLUGIN_VERSION.*/        TapForTap.PLUGIN_VERSION = \"$VERSION\";/" $ANDROID_FILE
+sed -i '' "s/.*TFTTapForTap performSelector: @selector(setPluginVersion:).*/    [TFTTapForTap performSelector: @selector(setPluginVersion:) withObject: @\"$VERSION\"];/" $IOS_FILE
 
 rm -rf release
 mkdir release
@@ -23,5 +23,3 @@ fi
 native-extension/release.sh
 cd release
 cp ../native-extension/release/tapfortap.ane .
-zip TapForTap-Air-"$VERSION".zip ./*
-rm -rf tapfortap.ane

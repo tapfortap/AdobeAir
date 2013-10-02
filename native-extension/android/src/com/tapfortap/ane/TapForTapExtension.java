@@ -17,7 +17,7 @@ public class TapForTapExtension implements FREExtension {
     @Override
     public void initialize() {
         TapForTap.PLUGIN = "air";
-        TapForTap.PLUGIN_VERSION = "1.1.0";
+        TapForTap.PLUGIN_VERSION = "1.2.0";
     }
 
     @Override
