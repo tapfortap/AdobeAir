@@ -24,6 +24,12 @@ Set the following environment variables:
 
 run `release.sh`
 
+1.2.1 / 2012-10-07
+=================
+### General
+- Update Android/iOS to SDK 3.x
+- Add setAutoScale method to stop Android from scaling banners ads based on the screen density
+
 1.1.0 / 2013-07-09
 ==================
 ### Android
