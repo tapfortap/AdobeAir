@@ -123,6 +123,10 @@ package com.tapfortap.ane
 		public function addTapForTapEventListener(listener: Function): void {
 			extContext.addEventListener(StatusEvent.STATUS, listener);
 		}
+
+		public function setAutoScale(state: Boolean): void {
+			extContext.call("setAutoScale", state);
+		}
 	}
 }
 
