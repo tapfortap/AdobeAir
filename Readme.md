@@ -5,24 +5,21 @@ For more information about Tap for Tap visit [http://www.tapfortap.com](http://w
 For documentation on how to use the AdobeAir plugin visit the [Tap for Tap documentation portal](http://tapfortap.com/documentation/AdobeAir).
 
 # Adobe Air Build Instructions
-Set the following environment variables:
-
-### For Android
-- ANDROID_SDK="PATH TO ANDROID SDK" (ie. /usr/local/android/)
-- ANDROID_TARGET="ANDROID TARGET SDK" (ie. 17)
-
-### For iOS
-- IOS_TARGET="IPHONE TARGET SDK" (ie iphoneos6.1)
-
-### For Air
-- FLEX_SDK="PATH TO YOUR FLEX SDK" (ie. /Users/Shared/flex-sdk)
-- AIR_SDK="PATH TO YOUT AIR SDK" (ie. /Users/Shared/AdobeAIRSDK)
-
-## Configure the iOS Plugin Project
-1. Open the XCode project in tapfortap-air/native-extension/ios
-2. Add a reference the FlashRuntimeExtension.h (If you know how to get xcodebuild to automatically include FlashRuntimeExtension.h let me know)
-
-run `release.sh`
+1. Install the Adobe Air SDK
+2. Install the Adobe Flex SDK
+3. Set the following environment variables:
+  - For Android
+      - `ANDROID_SDK="PATH TO ANDROID SDK"` (ie. `/usr/local/android/`)
+      - `ANDROID_TARGET="ANDROID TARGET SDK"` (ie. `17`)
+  - For iOS
+      - `IOS_TARGET="IPHONE TARGET SDK"` (ie. `iphoneos6.1`)
+  - For Air
+      - `FLEX_SDK="PATH TO YOUR FLEX SDK"` (ie. `/Users/Shared/flex-sdk`)
+      - `AIR_SDK="PATH TO YOUT AIR SDK"` (ie. `/Users/Shared/AdobeAIRSDK`)
+4. Configure the iOS Plugin Project
+  1. Open the XCode project in `tapfortap-air/native-extension/ios`
+  2. Add a reference the `FlashRuntimeExtension.h` (usually found in `$FLEX_SDK/include` (If you know how to get xcodebuild to automatically include `FlashRuntimeExtension.h` let me know)
+5. run `release.sh`
 
 1.2.1 / 2012-10-07
 =================
