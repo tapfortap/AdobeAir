@@ -6,7 +6,7 @@ native-extension/ios/TapForTapAir.xcodeproj/xcuserdata
 native-extension/ios/TapForTapAir.xcodeproj/project.xcworkspace/*
 native-extension/ios/build*
 native-extension/ios/interim-release*
-native-extension/ios/release*
+native-extension/ios/release/*
 
 native-extension/ane/android*
 native-extension/ane/ios*

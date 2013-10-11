@@ -1,5 +1,9 @@
 #!/bin/sh
 
+# Licensed under the MIT license
+# https://tapfortap.com/LICENSE.txt
+# Copyright (c) 2013 Tap for Tap
+
 VERSION="1.2.1"
 set -x
 
