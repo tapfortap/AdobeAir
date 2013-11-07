@@ -363,7 +363,7 @@ void TapForTapExtensionInitializer(void** extDataToSet, FREContextInitializer* c
     applicationViewController = [[[UIApplication sharedApplication] keyWindow] rootViewController];
 
     [TFTTapForTap performSelector: @selector(setPlugin:) withObject: @"air"];
-    [TFTTapForTap performSelector: @selector(setPluginVersion:) withObject: @"1.2.1"];
+    [TFTTapForTap performSelector: @selector(setPluginVersion:) withObject: @"1.2.2"];
 }
 
 void TapForTapExtensionFinalizer(void* extData)

@@ -4,7 +4,7 @@
 # https://tapfortap.com/LICENSE.txt
 # Copyright (c) 2013 Tap for Tap
 
-VERSION="1.2.1"
+VERSION="1.2.2"
 set -x
 
 cd "$(dirname $0)"
